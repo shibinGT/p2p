@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<!-- 开启匹配java property的驼峰命名和 数据库的column -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- 开启二级缓存 -->
+		<setting name="cacheEnabled" value="true"/>
+		<!-- 设置日志为log4j -->
+		<setting name="logImpl" value="LOG4J"/>  
+	</settings>
+
+</configuration>

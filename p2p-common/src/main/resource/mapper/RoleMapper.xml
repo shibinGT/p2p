@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qhcs.ssm.dao.RoleMapper">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+
+	<!-- boolean delete(Integer id); -->
+	<delete id="delete">
+        delete sys_role,sys_role_auth from sys_role left join sys_role_auth on sys_role.id=sys_role_auth.rid where sys_role.id=#{id}
+	</delete>
+	
+	<delete id="batchDelRole">
+        delete sys_role,sys_role_auth from sys_role left join sys_role_auth on sys_role.id=sys_role_auth.rid where sys_role.id in
+            <foreach item="id" collection="lists" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+    </delete>
+    
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="roleCode != null and roleCode !=''">
+				role_code,
+			</if>
+			<if test="roleDesc != null and roleDesc !=''">
+				role_desc,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="roleCode != null and roleCode !=''">
+				#{roleCode},
+			</if>
+			<if test="roleDesc != null and roleDesc !=''">
+				#{roleDesc},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 添加角色权限关联列表 -->
+	<insert id="addRoleAuth">
+		insert into sys_role_auth(rid,aid) values(#{rid},#{aid})
+	</insert>
+
+	<!-- 更新角色基本信息 -->
+	<update id="update" >
+		update sys_role 
+		<set>
+			<if test="roleCode != null and roleCode !=''">
+				role_code = #{roleCode},
+			</if>
+			<if test="roleDesc != null and roleDesc !=''">
+				role_desc = #{roleDesc},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- public boolean deleteRoleAuth(Integer id); 角色权限对应信息更新-->
+	<delete id="deleteRoleAuth">
+		delete from sys_role_auth where rid=#{rid};
+	</delete>
+	
+	
+	<!-- 角色集合 -->
+	<resultMap id="roles" type="com.qhcs.ssm.entity.Role">
+		<id column="id" property="id"></id>
+		<result column="role_desc" property="roleDesc"></result>
+		<collection property="auths" ofType="com.qhcs.ssm.entity.Auth">
+			<result column="auth_desc" property="authDesc"></result>
+		</collection>
+	</resultMap>
+
+	<!-- 根据角色描述查询 -->
+	<select id="queryList"  resultMap="roles">
+		select r.id,r.role_desc,a.`auth_desc` from (sys_role r left join sys_role_auth  ra on r.id=ra.`rid`) left join sys_auth a on a.id=ra.`aid`
+		<where> 
+		      <if test="roleDesc != null and roleDesc!=''">
+		          <bind name="likedesc" value="'%' + roleDesc + '%'"/>
+			      and r.role_desc like #{likedesc}
+		      </if>
+		</where>
+	</select>
+	
+	<!-- public Role selectById(Integer id); -->
+	<select id="selectById" resultType="com.qhcs.ssm.entity.Role">
+		select * from sys_role where id= #{id}
+	</select>
+	<!-- 根据用户id来查询角色 -->
+	<select id="getListByUserId" resultType="com.qhcs.ssm.entity.Role">
+		select a.* from sys_role a,sys_user_role b where a.id=b.rid and b.uid= #{id}
+	</select>
+	
+</mapper>

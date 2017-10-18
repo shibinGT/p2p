@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		
+	<!-- 自动扫描包 -->
+	<context:component-scan base-package="com.qhcs.ssm">
+		<!-- 排除spring-mvc.xml扫描的包 -->
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+	
+	<!-- 导入外部属性文件：数据库属性文件，redis属性文件 -->
+	<context:property-placeholder location="classpath:db.properties,classpath:redisconfig.properties"/>
+	
+
+	<!-- 配置druid数据源 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<!-- 基本配置，访问数据库的driver、url、user、password -->
+		<property name="driverClassName" value="${jdbc.druid.driverClassName}" />
+		<property name="url" value="${jdbc.druid.url}" />
+		<property name="username" value="${jdbc.druid.username}" />
+		<property name="password" value="${jdbc.druid.password}" />
+		<!-- 配置初始化大小、最大、最小 -->
+		<property name="initialSize" value="${jdbc.druid.initialSize}" />
+		<property name="maxActive" value="${jdbc.druid.maxActive}" />
+		<property name="minIdle" value="${jdbc.druid.minIdle}" />
+		<!-- 配置获取连接等待超时的时间，单位是毫秒 -->
+		<property name="maxWait" value="${jdbc.druid.maxWait}" />
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="${jdbc.druid.filters}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.druid.timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.druid.minEvictableIdleTimeMillis}" />
+		<!-- 用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。 -->
+		<!-- 查询语句需要根据不同的数据源进行调整设置 -->
+		<property name="validationQuery" value="${jdbc.druid.validationQuery}" />
+		<!-- 建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。 -->
+		<property name="testWhileIdle" value="${jdbc.druid.testWhileIdle}" />
+		<!-- 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。 -->
+		<property name="testOnBorrow" value="${jdbc.druid.testOnBorrow}" />
+		<!-- 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能 -->
+		<property name="testOnReturn" value="${jdbc.druid.testOnReturn}" />
+		<!-- 对于长时间不使用的连接强制关闭 -->
+		<property name="removeAbandoned" value="${jdbc.druid.removeAbandoned}" />
+		<!-- 超过30分钟开始关闭空闲连接 -->
+		<property name="removeAbandonedTimeout" value="${jdbc.druid.removeAbandonedTimeout}" />
+		<!-- 将当前关闭动作记录到日志 -->
+		<property name="logAbandoned" value="${jdbc.druid.logAbandoned}" />
+		<!-- 设置数据库事务是否自动提交，默认值为true -->
+		<property name="defaultAutoCommit" value="${jdbc.druid.defaultAutoCommit}" />
+		<!-- 是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大。 -->
+		<property name="poolPreparedStatements" value="${jdbc.druid.poolPreparedStatements}" />
+		<!-- 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。 -->
+		<property name="maxOpenPreparedStatements" value="${jdbc.druid.maxOpenPreparedStatements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="${jdbc.druid.maxPoolPreparedStatementPerConnectionSize}" />
+	</bean>
+	
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 配置事务属性 -->
+	<tx:advice id="tx" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 配置增删改为如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。 -->
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="del*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<!-- 配置其它的事务为只读 -->
+			<tx:method name="*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- 配置切面-->
+	<aop:config>
+			<!-- 配置切点 -->
+			<aop:pointcut expression="execution(* com.qhcs.service.*.*(..))" id="pointcut"/>
+			<aop:advisor advice-ref="tx" pointcut-ref="pointcut"/>
+	</aop:config>
+	
+	<!-- 配置mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	    <!-- 配置数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<!-- 配置映射文件 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+		 <property name="plugins">
+        <array>
+            <bean class="com.github.pagehelper.PageInterceptor">
+                <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                <property name="properties">
+                    <value>
+                        helperDialect=mysql
+                        reasonable=true
+                        supportMethodsArguments=true
+                        params=count=countSql
+                        autoRuntimeDialect=true
+                    </value>
+                </property>
+            </bean>
+        </array>
+    </property>
+	</bean>
+	
+	<!-- 配置mybatis接口注册 -->
+	<mybatis-spring:scan base-package="com.qhcs.ssm.dao"/>
+	
+	
+	
+	<!-- 导入spring-shiro.xml -->
+	<import resource="classpath:spring-shiro.xml"/>
+
+</beans>

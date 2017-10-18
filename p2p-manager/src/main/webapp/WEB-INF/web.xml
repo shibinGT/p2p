@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <!-- servlet描述性的文字说明，没实际意义-->
+    <display-name>ssm3</display-name>
+  
+  <!-- 首页 -->
+    <welcome-file-list>
+	    <welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	  
+  <!-- 配置字符编码过滤器 -->
+  	<filter> 
+  		<!-- 过滤器名称 -->
+		<filter-name>encodingFilter </filter-name> 
+		<!-- 过滤器全类名 -->
+		<filter-class> 
+			org.springframework.web.filter.CharacterEncodingFilter 
+		</filter-class> 
+		<!-- 设置字符编码为UTF-8 -->
+		<init-param> 
+			<param-name>encoding </param-name> 
+			<param-value>UTF-8 </param-value> 
+		</init-param> 
+		<!-- 强制覆盖之前的编码格式 -->
+		<init-param> 
+			<param-name>forceEncoding </param-name> 
+			<param-value>true </param-value> 
+		</init-param> 
+	</filter> 
+    <!-- 配置字符编码过滤器映射 -->
+    <filter-mapping> 
+		<filter-name>encodingFilter </filter-name> 
+		<url-pattern>/*</url-pattern> 
+	</filter-mapping>
+  
+  <!-- 加载Spring配置 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<!-- 配置spring容器加载 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+  <!-- 注册Shiro Filter -->
+    <filter>
+    	<!-- 过滤器名称 -->
+        <filter-name>shiroFilter</filter-name>
+        <!-- 过滤器的全类名 -->
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <!-- 用Spring来管理过滤器的生命周期 -->
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+	<!--配置Shiro Filter映射  -->
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	
+  <!-- 配置druid的监控 -->
+	<servlet> 
+	     <servlet-name>DruidStatView</servlet-name> 
+	     <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class> 
+	 </servlet>
+	 <!--配置druid映射  --> 
+	 <servlet-mapping> 
+	     <servlet-name>DruidStatView</servlet-name> 
+	     <url-pattern>/druid/*</url-pattern> 
+	 </servlet-mapping> 
+  
+  <!-- 配置Spring mvc	 -->
+	 <servlet>
+		<!-- 容器名称 -->
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<!-- 容器全类名 -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 加载mvc配置文件 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring-mvc.xml</param-value>
+		</init-param>
+		<!-- 设置成服务器启动时加载 -->
+		<load-on-startup>1</load-on-startup>
+	 </servlet>
+	 <!-- 配置Spring mvc映射 -->
+	 <servlet-mapping>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	 </servlet-mapping>
+	
+  <!--服务器找不到的页面  -->
+	 <error-page>
+		<error-code>404</error-code>
+		<location>/error/404.jsp</location>
+	 </error-page>
+  <!--错误页面  -->
+	 <error-page>
+		<error-code>500</error-code>
+		<location>/error/500.jsp</location>
+	 </error-page>
+	
+</web-app>

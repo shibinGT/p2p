@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 这是shiro和spring结合的与shiro与redis结合的 xml -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<!-- shiro ========================================================================================== -->
+	<!-- 1.注册 securityManager  安全管理器 shiro的核心，协调shiro的各个组件 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 装配缓存管理 -->
+		<property name="cacheManager" ref="redisCacheManager" />
+		<!-- 装配会话管理   创建和管理用户session -->
+		<property name="sessionManager" ref="sessionManager" />
+		<!-- 装配shiro作用的域 应用程序和安全数据之间的“桥梁”或“连接器” -->
+		<property name="realm" ref="jdbcRealm" />
+	</bean>
+	
+	<!-- 注册会话管理器  创建和管理用户session-->
+	<bean id="sessionManager"
+		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<!-- 装配sessionDAO -->
+		<property name="sessionDAO" ref="redisShiroSessionDAO" />
+		<!-- 配置会话过期时间-->
+		<property name="globalSessionTimeout" value="#{60*60*1000}" />
+		<!-- 配置会话验证间隔时间 -->
+		<property name="sessionValidationInterval" value="3000000" />
+		<!-- 启用会话验证 -->
+		<property name="sessionValidationSchedulerEnabled" value="true" />
+	</bean>
+	
+	
+		<!-- 注册jdbcRealm shiro验证的域，用于获取用户的密码进行验证,为用户的角色和权限和查询 -->
+		
+		<bean id="jdbcRealm" class="com.qhcs.security.cache.CustomRealm">
+		
+		</bean>
+		
+		
+<!-- 	<bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">
+		装配数据源
+		<property name="dataSource" ref="dataSource"></property>
+		根据用户名验证密码是否正确
+		<property name="authenticationQuery" value=" select password from sys_user where name=?"></property>
+		查询用户角色
+		<property name="userRolesQuery"
+			value="SELECT role_code  FROM sys_role a,sys_user_role b,sys_user c WHERE a.id=b.`rid` AND b.`uid` = c.`id` AND c.name=?"></property>
+		查询角色权限
+		<property name="permissionsQuery"
+			value="SELECT auth_code FROM sys_auth a,sys_role b,sys_role_auth c WHERE a.id= c.`aid` AND c.`rid`=b.`id` AND b.`role_code`=?"></property>
+		启用权限查询
+		<property name="permissionsLookupEnabled" value="true" />
+	</bean> -->
+
+	<!-- 让Spring来管理shiro组件的生命周期 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<!-- 可以使用shiro的注解 -->
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+		depends-on="lifecycleBeanPostProcessor" />
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+
+	<!-- 让spring调用shiro的安全管理 -->
+	<bean id="secureRemoteInvocationExecutor"
+		class="org.apache.shiro.spring.remoting.SecureRemoteInvocationExecutor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+
+	<!-- 注册自定义的路径拦截的权限集合的生产工厂 -->
+	<bean id="filterChainDefinitionMapFactory" class="com.qhcs.ssm.shiro.FilterChainDefinitionMapFactory"></bean>
+
+	<!-- 自定义的路径拦截的权限集合通过工厂的方式得到 -->
+	<bean id="filterChainDefinitionMap" factory-bean="filterChainDefinitionMapFactory"
+		factory-method="filterChainDefinitionMap"></bean>
+
+	<!-- 注册shiro的拦截工厂bean  -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 装配 securityManager -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 登录页面 -->
+		<property name="loginUrl" value="/index" />
+		<!-- 成功页面 -->
+		<property name="successUrl" value="/main" />
+		<!-- 未认证的页面 -->
+		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
+		<!-- 装配自定义的路径拦截的权限集合 -->
+		<property name="filterChainDefinitionMap" ref="filterChainDefinitionMap">
+		</property>
+	</bean>
+<!-- /shiro ========================================================================================== -->
+
+
+<!-- redis ========================================================================================== -->
+	
+	<!-- 注册自定义cacheManager 缓存管理（应用redis进行缓存）-->
+	<bean id="redisCacheManager" class="com.qhcs.security.cache.RedisCacheManager">
+		<!-- 装配redis管理 -->
+		<property name="redisManager" ref="redisManager" />
+	</bean>
+
+	<!-- 注册sessionDAO（调用redisManager 将session与redis数据库进行交互） -->
+	<bean id="redisShiroSessionDAO" class="com.qhcs.security.cache.RedisSessionDAO">
+		<!-- 装配redisManager -->
+		<property name="redisManager" ref="redisManager" />
+	</bean>
+	
+	<!-- 注册jedisPoolConfig redis的连接池的属性配置 -->
+	<bean id="jedisPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
+		<property name="maxIdle" value="${redis.maxIdle}"></property>
+		<property name="minIdle" value="${redis.minIdle}"></property>
+		<property name="maxWaitMillis" value="${redis.maxWaitMillis}"></property>
+	</bean>
+	<!-- Redis集群配置 -->  
+    <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">  
+        <constructor-arg>  
+            <set>  
+                <bean class="redis.clients.jedis.HostAndPort">  
+                	 <constructor-arg index="0" value="${redis.host1.ip}"/>
+	            	 <constructor-arg index="1" value="${redis.host1.port}"/> 
+            	</bean>
+            	<bean class="redis.clients.jedis.HostAndPort">  
+                	 <constructor-arg index="0" value="${redis.host2.ip}"/>
+	            	 <constructor-arg index="1" value="${redis.host2.port}"/> 
+            	</bean>
+            	<bean class="redis.clients.jedis.HostAndPort">  
+                	 <constructor-arg index="0" value="${redis.host3.ip}"/>
+	            	 <constructor-arg index="1" value="${redis.host3.port}"/> 
+            	</bean>
+            	<bean class="redis.clients.jedis.HostAndPort">  
+                	 <constructor-arg index="0" value="${redis.host4.ip}"/>
+	            	 <constructor-arg index="1" value="${redis.host4.port}"/> 
+            	</bean>
+            	<bean class="redis.clients.jedis.HostAndPort">  
+                	 <constructor-arg index="0" value="${redis.host5.ip}"/>
+	            	 <constructor-arg index="1" value="${redis.host5.port}"/> 
+            	</bean>
+            	<bean class="redis.clients.jedis.HostAndPort">  
+                	 <constructor-arg index="0" value="${redis.host6.ip}"/>
+	            	 <constructor-arg index="1" value="${redis.host6.port}"/> 
+            	</bean> 
+            </set>  
+        </constructor-arg>  
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>  
+    </bean>  
+	
+	<!-- 注册redisManager (连接redis数据库的javabean) -->
+	<bean id="redisManager" class="com.qhcs.security.cache.RedisManager">
+		<!-- 装配连接池 -->
+		<property name="jedisCluster" ref="jedisCluster"></property>
+	</bean>
+	
+	<!-- redis Cache -->
+	<bean id="redisCache" class="com.qhcs.security.cache.RedisCache">
+		<constructor-arg ref="redisManager"></constructor-arg>
+	</bean>
+
+<!-- /redis ========================================================================================== -->
+
+
+</beans>
