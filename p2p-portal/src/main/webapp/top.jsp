@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String ctx=request.getContextPath();
+	session.setAttribute("ctx", ctx);
+%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -53,7 +57,7 @@
                 </div>
                 <ul class="top-nav fn-clear">
                     <li class="on"><a href="index.html" class="${param.index }">首页</a></li>
-                    <li><a href="list.html" class="${param.index2 }">我要投资</a></li>
+                    <li><a href="${ctx}/investment/projectList" class="${param.investment}">我要投资</a></li>
                     <li><a href="apply.html" class="${param.index }">我要借款</a></li>
                     <li><a href="帮助中心.html" class="${param.index }">安全保障</a></li>
                     <li class="top-nav-safe"><a href="个人中心首页.html" class="${param.index }">我的账户</a></li>
