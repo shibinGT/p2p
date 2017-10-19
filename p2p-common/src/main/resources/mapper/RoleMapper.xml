@@ -6,18 +6,18 @@
 
 	<!-- boolean delete(Integer id); -->
 	<delete id="delete">
-        delete sys_role,sys_role_auth from sys_role left join sys_role_auth on sys_role.id=sys_role_auth.rid where sys_role.id=#{id}
+        delete a,b from t_role a left join t_auth_role b on a.role_id=b.role_id where a.role_id=#{roleId}
 	</delete>
 	
 	<delete id="batchDelRole">
-        delete sys_role,sys_role_auth from sys_role left join sys_role_auth on sys_role.id=sys_role_auth.rid where sys_role.id in
+        delete a,b from t_role a left join t_auth_role b on a.role_id=b.role_id where a.role_id in
             <foreach item="id" collection="lists" open="(" separator="," close=")">
                 #{id}
             </foreach>
     </delete>
     
-	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
-		insert into sys_role
+	<insert id="insert" useGeneratedKeys="true" keyProperty="roleId">
+		insert into t_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="roleCode != null and roleCode !=''">
 				role_code,
@@ -39,12 +39,12 @@
 	
 	<!-- 添加角色权限关联列表 -->
 	<insert id="addRoleAuth">
-		insert into sys_role_auth(rid,aid) values(#{rid},#{aid})
+		insert into t_auth_role(role_id,auth_id) values(#{roleId},#{authId})
 	</insert>
 
 	<!-- 更新角色基本信息 -->
 	<update id="update" >
-		update sys_role 
+		update t_role 
 		<set>
 			<if test="roleCode != null and roleCode !=''">
 				role_code = #{roleCode},
@@ -53,18 +53,18 @@
 				role_desc = #{roleDesc},
 			</if>
 		</set>
-		where id = #{id}
+		where role_id = #{roleId}
 	</update>
 	
 	<!-- public boolean deleteRoleAuth(Integer id); 角色权限对应信息更新-->
 	<delete id="deleteRoleAuth">
-		delete from sys_role_auth where rid=#{rid};
+		delete from t_auth_role where role_id=#{roleId};
 	</delete>
 	
 	
 	<!-- 角色集合 -->
 	<resultMap id="roles" type="com.qhcs.ssm.entity.Role">
-		<id column="id" property="id"></id>
+		<id column="roleId" property="role_id"></id>
 		<result column="role_desc" property="roleDesc"></result>
 		<collection property="auths" ofType="com.qhcs.ssm.entity.Auth">
 			<result column="auth_desc" property="authDesc"></result>
@@ -73,7 +73,7 @@
 
 	<!-- 根据角色描述查询 -->
 	<select id="queryList"  resultMap="roles">
-		select r.id,r.role_desc,a.`auth_desc` from (sys_role r left join sys_role_auth  ra on r.id=ra.`rid`) left join sys_auth a on a.id=ra.`aid`
+		select r.role_id,r.role_desc,a.`auth_desc` from (t_role r left join t_auth_role  ra on r.role_id=ra.role_id) left join t_auth a on a.auth_id=ra.auth_id
 		<where> 
 		      <if test="roleDesc != null and roleDesc!=''">
 		          <bind name="likedesc" value="'%' + roleDesc + '%'"/>
@@ -84,11 +84,11 @@
 	
 	<!-- public Role selectById(Integer id); -->
 	<select id="selectById" resultType="com.qhcs.ssm.entity.Role">
-		select * from sys_role where id= #{id}
+		select * from t_role where role_id= #{role_id}
 	</select>
 	<!-- 根据用户id来查询角色 -->
 	<select id="getListByUserId" resultType="com.qhcs.ssm.entity.Role">
-		select a.* from sys_role a,sys_user_role b where a.id=b.rid and b.uid= #{id}
+		select a.* from t_role a,t_employee_role b where a.role_id=b.role_id and b.employee_id= #{employeeId}
 	</select>
 	
 </mapper>

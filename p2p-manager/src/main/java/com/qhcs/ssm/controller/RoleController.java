@@ -99,7 +99,7 @@ public class RoleController {
 		// 添加关联
 		if (result) {
 			for (Integer aid : role.getAuths()) {
-				roleService.addRoleAuth(role.getId(), aid);
+				roleService.addRoleAuth(role.getRoleId(), aid);
 			}
 		}
 		model.addAttribute("result", result);

@@ -118,11 +118,11 @@ $(function() {
 	// 提交登录
 	$('#loginSubmint').click(function() {
 		// md5 对密码进行加密24次
-		var password2 = $("#password").val();
+		var password2 = $("#employeePassword").val();
 		for (var i = 0; i < 24; i++) {
 			password2 = hex_md5(password2);
 		}
-		$("#password").val(password2);
+		$("#employeePassword").val(password2);
 		$("#loginForm").submit();
 	});
 

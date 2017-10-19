@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qhcs.ssm.dao.EmployeeMapper" >
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	<!-- 
+		public Employee queryUserById(Integer id);
+	 -->
+	 
+	 <select id="queryUserById" resultType="com.qhcs.ssm.entity.Employee">
+	 	select * from t_employee where employee_id=#{employeeId}
+	 </select>
+	
+	<!-- queryUserByName -->
+
+     <select id="queryUserByName" resultType="com.qhcs.ssm.entity.Employee">
+        select * from t_employee where employee_account_number=#{employeeAccountNumber}
+     </select>
+     
+     <!-- public boolean addNomalUser(User user) -->
+     
+     <insert id="addNomalUser" useGeneratedKeys="true" keyProperty="employeeId">
+        insert into t_employee (employee_account_number,employee_password) values (#{employeeAccountNumber},#{employeePassword})
+     </insert>
+     	
+     	
+<!--     public boolean addNomalUserRole(Long id);
+    
+    <insert id="addNomalUserRole">
+        insert into sys_user_role (uid,rid) values (#{id},2)
+     </insert> -->
+     
+     
+   <!--  public boolean addAdminRole(Integer uid, Integer rid); -->
+   
+		<insert id="addAdminRole">
+		        insert into t_employee_role (employee_id,role_id) values(#{uid},#{rid})
+		</insert>
+	<!-- 
+		public List<Emloyee> queryList(Employee employee);
+	 -->
+	 
+	 <select id="queryList" resultType="com.qhcs.ssm.entity.Employee">
+	 	select * from t_employee 
+		<where>
+			<if test="employeeAccountNumber!=null and employeeAccountNumber!=''">
+				 <bind name="likename" value="'%'+employeeAccountNumber+'%'"/>
+				  and name like #{likename}
+			</if>
+		</where>	 	
+	 </select>
+	 
+	 <delete id="del">
+	 	delete from t_employee where employee_id=#{employee_id}
+	 </delete>
+
+	 <delete id="delUserRole" >
+	 	delete from t_employee_role a where employee_id=#{employeeId}
+	 
+	 </delete>
+	 
+	 <!--  public boolean queryRole(); -->
+	 <select id="queryRole" resultType="com.qhcs.ssm.entity.Role">
+	 	select * from t_role
+	 </select>
+	 
+	
+</mapper>

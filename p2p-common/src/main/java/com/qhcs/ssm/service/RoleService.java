@@ -93,11 +93,11 @@ public class RoleService {
 	 */
 	public boolean update(Role role) {
 		// 更新角色权限对应表--先删除原有的
-		roleMapper.deleteRoleAuth(role.getId());
+		roleMapper.deleteRoleAuth(role.getRoleId());
 		// 重新从列表中获取，然后插入
 		if (role.getAuths().size() > 0) {
 			for (Integer aid : role.getAuths()) {
-				roleMapper.addRoleAuth(role.getId(), aid);
+				roleMapper.addRoleAuth(role.getRoleId(), aid);
 			}
 		} else {
 			System.out.println("没有选择任何权限！");
@@ -138,13 +138,14 @@ public class RoleService {
 		// PageInfo pageInfo = PageHelper.startPage(1, 10).doSelectPageInfo(();
 		return page;
 	}
-	
+
 	/**
 	 * 根据用户id来查询角色
+	 * 
 	 * @param id
 	 * @return
 	 */
-	public List<Role>  getListByUserId(Integer id){
+	public List<Role> getListByUserId(Integer id) {
 		return roleMapper.getListByUserId(id);
 	}
 }

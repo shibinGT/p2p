@@ -30,7 +30,7 @@
 							<div class="center">
 								<h1>
 									<i class="icon-leaf green"></i>
-									<span class="red">人事管理系统</span>
+									<span class="red">yrd后台管理系统</span>
 									<span class="white">Application</span>
 								</h1>
 								<h4 class="blue"></h4>
@@ -49,13 +49,13 @@
 
 											<div class="space-6"></div>
 
-											<form:form action="${ctx}/login" modelAttribute="user" id="loginForm">
+											<form:form action="${ctx}/login" modelAttribute="employee" id="loginForm">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<form:input path="name" cssClass="form-control" placeholder="用户名"/>
+															<form:input path="employeeAccountNumber" cssClass="form-control" placeholder="用户名"/>
 															<i class="icon-user"></i>
-															<form:errors path="name"></form:errors>
+															<form:errors path="employeeAccountNumber"></form:errors>
 															<c:if test="${loginFail==true }">
 																<span id="login.errors" style="color: red">用户名或者密码错误</span>
 															</c:if>
@@ -64,9 +64,9 @@
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<form:password path="password" cssClass="form-control" placeholder="密码"/>
+															<form:password path="employeePassword" cssClass="form-control" placeholder="密码"/>
 															<i class="icon-lock"></i>
-															<form:errors path="password"></form:errors>
+															<form:errors path="employeePassword"></form:errors>
 															<c:out value="${errorMsg}"></c:out>
 														</span>
 													</label>

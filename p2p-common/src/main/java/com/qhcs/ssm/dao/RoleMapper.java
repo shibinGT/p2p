@@ -50,7 +50,7 @@ public interface RoleMapper {
 	 *            权限id
 	 * @return
 	 */
-	public boolean addRoleAuth(@Param("rid") Integer rid, @Param("aid") Integer aid);
+	public boolean addRoleAuth(@Param("roleId") Integer rid, @Param("authId") Integer aid);
 
 	/**
 	 * 
@@ -92,12 +92,13 @@ public interface RoleMapper {
 	 * @return
 	 */
 	public boolean deleteRoleAuth(Integer id);
-	
+
 	/**
 	 * 根据用户id来查询角色
+	 * 
 	 * @param id
 	 * @return
 	 */
-	public List<Role>  getListByUserId(Integer id);
+	public List<Role> getListByUserId(Integer id);
 
 }

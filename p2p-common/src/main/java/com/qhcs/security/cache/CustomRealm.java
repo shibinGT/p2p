@@ -18,11 +18,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.qhcs.ssm.entity.Auth;
+import com.qhcs.ssm.entity.Employee;
 import com.qhcs.ssm.entity.Role;
-import com.qhcs.ssm.entity.User;
 import com.qhcs.ssm.service.AuthService;
+import com.qhcs.ssm.service.EmployeeService;
 import com.qhcs.ssm.service.RoleService;
-import com.qhcs.ssm.service.UserService;
 
 public class CustomRealm extends AuthorizingRealm implements Realm, InitializingBean {
 
@@ -31,7 +31,7 @@ public class CustomRealm extends AuthorizingRealm implements Realm, Initializing
 	@Autowired
 	private AuthService authService;
 	@Autowired
-	private UserService userService;
+	private EmployeeService userService;
 
 	@Autowired
 	private RedisCache<String, Object> redisCache;
@@ -46,20 +46,20 @@ public class CustomRealm extends AuthorizingRealm implements Realm, Initializing
 		// logger.info("授权查询回调函数, 进行鉴权但缓存中无用户的授权信息时调用");
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		String username = (String) super.getAvailablePrincipal(principals);
-		User user = userService.queryUserByName(username);
-		List<Role> roles = roleService.getListByUserId(user.getId());
+		Employee user = userService.queryUserByName(username);
+		List<Role> roles = roleService.getListByUserId(user.getEmployeeId());
 
 		StringBuilder sb = new StringBuilder();
 		for (Role role : roles) {
 			info.addRole(role.getRoleCode());
-			sb.append(role.getId());
+			sb.append(role.getRoleId());
 			sb.append(",");
 		}
-		List<Auth> perms = authService.getListByUserId(user.getId());
+		List<Auth> perms = authService.getListByUserId(user.getEmployeeId());
 		for (Auth auth : perms) {
 			info.addStringPermission(auth.getAuthCode());
 		}
-		redisCache.put(Constants.getUserModuleCacheKey(user.getName()), perms);
+		redisCache.put(Constants.getUserModuleCacheKey(user.getEmployeeAccountNumber()), perms);
 		// cacheManager.getCache("").clear();
 		redisCache.put(Constants.getUserRolesCacheKey(username), roles);
 		return info;
@@ -71,13 +71,13 @@ public class CustomRealm extends AuthorizingRealm implements Realm, Initializing
 		SimpleAuthenticationInfo info = null;
 
 		UsernamePasswordToken upt = (UsernamePasswordToken) token;
-		User user = userService.queryUserByName(upt.getUsername());
+		Employee user = userService.queryUserByName(upt.getUsername());
 		if (user == null) {
 			throw new AuthenticationException("用户名不存在！");
 		}
 
-		redisCache.put(Constants.getUserSessionKey(user.getName()), user);
-		info = new SimpleAuthenticationInfo(user.getName(), user.getPassword(), getName());
+		redisCache.put(Constants.getUserSessionKey(user.getEmployeeAccountNumber()), user);
+		info = new SimpleAuthenticationInfo(user.getEmployeeAccountNumber(), user.getEmployeePassword(), getName());
 		return info;
 	}
 

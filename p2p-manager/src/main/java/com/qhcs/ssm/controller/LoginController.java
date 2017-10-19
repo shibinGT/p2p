@@ -17,17 +17,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.qhcs.ssm.entity.User;
-import com.qhcs.ssm.service.UserService;
+import com.qhcs.ssm.entity.Employee;
+import com.qhcs.ssm.service.EmployeeService;
 
 @Controller
 public class LoginController {
 
 	@Autowired
-	private UserService userService;
+	private EmployeeService userService;
 
 	@RequestMapping("/login")
-	public String login(@Valid User user, BindingResult result, Model model, HttpSession session) {
+	public String login(@Valid Employee employee, BindingResult result, Model model, HttpSession session) {
 		if (result.getErrorCount() > 0) {
 			return "index";
 		}
@@ -40,15 +40,16 @@ public class LoginController {
 
 			// md5 加密 密码 加密73次用用户名进行加盐
 			String hashAlgorithmName = "MD5";
-			String credentials = user.getPassword();
+			String credentials = employee.getEmployeePassword();
 			int hashIterations = 73;
-			Object salt = user.getName();
+			Object salt = employee.getEmployeeAccountNumber();
 			Object obj = new SimpleHash(hashAlgorithmName, credentials, salt, hashIterations);
 			// md5 加密 密码 加密73次用用户名进行加盐结束
 			System.err.println(obj.toString());
-			user.setPassword(obj.toString());
+			employee.setEmployeePassword(obj.toString());
 			// 把用户名和密码包装成一个token，UsernamePasswordToken
-			UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), user.getPassword());
+			UsernamePasswordToken token = new UsernamePasswordToken(employee.getEmployeeAccountNumber(),
+					employee.getEmployeePassword());
 
 			// 记住我
 			token.setRememberMe(true);
@@ -83,12 +84,12 @@ public class LoginController {
 	}
 
 	@RequestMapping("/index")
-	public String logout(User user) {
+	public String logout(Employee employee) {
 		return "index";
 	}
 
 	@RequestMapping("/main")
-	public String main(User user) {
+	public String main(Employee employee) {
 		return "main";
 	}
 

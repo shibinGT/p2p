@@ -6,21 +6,20 @@ public class Role extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	// 角色id
-	private Integer id;
-
-	// 角色编码
+	private Integer roleId;
+	// 角色名
 	private String roleCode;
 	// 角色描述
 	private String roleDesc;
 	// 拥有权限
 	private List<Integer> auths;
 
-	public Integer getId() {
-		return id;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getRoleCode() {
@@ -28,7 +27,7 @@ public class Role extends BaseEntity {
 	}
 
 	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
+		this.roleCode = roleCode == null ? null : roleCode.trim();
 	}
 
 	public String getRoleDesc() {
@@ -36,7 +35,7 @@ public class Role extends BaseEntity {
 	}
 
 	public void setRoleDesc(String roleDesc) {
-		this.roleDesc = roleDesc;
+		this.roleDesc = roleDesc == null ? null : roleDesc.trim();
 	}
 
 	public List<Integer> getAuths() {
@@ -45,11 +44,6 @@ public class Role extends BaseEntity {
 
 	public void setAuths(List<Integer> auths) {
 		this.auths = auths;
-	}
-
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", roleCode=" + roleCode + ", roleDesc=" + roleDesc + ", auths=" + auths + "]";
 	}
 
 }

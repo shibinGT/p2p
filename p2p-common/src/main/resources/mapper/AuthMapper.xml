@@ -4,26 +4,27 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qhcs.ssm.dao.AuthMapper" >
 	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	
 	<resultMap type="com.qhcs.ssm.entity.Auth" id="authMap">
-	  <id column="id" property="id"/>
+	  <id column="authId" property="auth_id"/>
 	  <result column="auth_code" property="authCode"/>
 	  <result column="auth_desc" property="authDesc"/>
-	  <result column="resource" property="resource"/>
-	  <result column="sort" property="sort"/>
+	  <result column="auth_resource" property="authResource"/>
+	  <result column="auth_sort" property="authSort"/>
 	  <result column="auth_type" property="authType"/>
 	</resultMap>
 
     <!-- 查询权限列表 -->
 	<select id="getList" resultType="com.qhcs.ssm.entity.Auth">
-		SELECT id, CASE WHEN auth_type=1 THEN CONCAT('perms[',auth_code,']') ELSE auth_code END auth_code, resource FROM sys_auth ORDER BY sort 
+		SELECT auth_id, CASE WHEN auth_type=1 THEN CONCAT('perms[',auth_code,']') ELSE auth_code END auth_code, auth_resource FROM t_auth ORDER BY auth_sort 
 	</select>
 	
 	<!-- 动态查询权限列表 -->
 	 <select id="queryAuths" resultMap="authMap">
-	 	select * from sys_auth
+	 	select * from t_auth
 	 	<where>
-	 	  <if test="id!=null and id!=''">
-	 	    id=#{id}
+	 	  <if test="authId!=null and authId!=''">
+	 	    auth_id=#{auth_id}
 	 	  </if>
 	 	   <if test="authCode!=null and authCode!=''">
 	 	     and auth_code like "%"#{authCode}"%"
@@ -31,8 +32,8 @@
 	 	   <if test="authDesc!=null and authDesc!=''">
 	 	      and auth_desc like "%"{authDesc}"%"
 	 	  </if>
-	 	   <if test="resource!=null and resource!=''">
-	 	      and resource like "%"#{resource}"%"
+	 	   <if test="authResource!=null and authResource!=''">
+	 	      and auth_resource like "%"#{authResource}"%"
 	 	  </if>
 	 	  <if test="authType!=null">
 	 	      and auth_type=#{authType}
@@ -42,22 +43,22 @@
 	
 	<!-- 根据权限id查询权限 -->
 	 <select id="queryAuthById" resultMap="authMap">
-	 	select * from sys_auth where id=#{id}
+	 	select * from t_auth where auth_id=#{authId}
 	 </select>
 	
 	<!-- 根据权限id删除权限 -->
 	 <delete id="delAuthById">
-	   delete from sys_auth where id=#{_parameter}
+	   delete from t_auth where id=#{authId}
 	 </delete>
 	 
 	 <!-- 根据权限id删除相应角色 -->
 	 <delete id="delRoleByAuthId">
-	 	delete from sys_role_auth where aid=#{id}
+	 	delete from t_auth_role where auth_id=#{authId}
 	 </delete>
 	 
 	 <!-- 根据权限id集合批量删除权限 -->
 	 <delete id="batchDelAuths">
-	    delete from sys_auth where id in
+	    delete from t_auth where auth_id in
 	    <foreach collection="list" item="id" open="(" close=")" separator=",">
 	       #{id}
 	    </foreach>
@@ -65,7 +66,7 @@
 	 
 	 <!-- 根据权限id集合批量删除权限角色关联表记录 -->
 	 <delete id="batchDelRolesAndAuths">
-	    delete from sys_role_auth where aid in
+	    delete from t_auth_role where auth_id in
 	    <foreach collection="list" item="aid" open="(" close=")" separator=",">
 	       #{aid}
 	    </foreach>
@@ -73,13 +74,13 @@
 	
 	<!-- 新增一个权限 -->
 	<insert id="addAuth" parameterType="com.qhcs.ssm.entity.Auth">
-	   insert into sys_auth (auth_code,auth_desc,resource,sort,auth_type)
-	   values (#{authCode},#{authDesc},#{resource},#{sort},#{authType})
+	   insert into t_auth (auth_code,auth_desc,auth_resource,auth_sort,auth_type)
+	   values (#{authCode},#{authDesc},#{authResource},#{authSort},#{authType})
 	</insert>
 	
 	<!-- 修改权限信息 -->
 	<update id="updateAuth" parameterType="com.qhcs.ssm.entity.Auth">
-	  update sys_auth
+	  update t_auth
 	  <set>
 	 	   <if test="authCode!=null and authCode!=''">
 	 	      auth_code=#{authCode},
@@ -87,24 +88,24 @@
 	 	   <if test="authDesc!=null and authDesc!=''">
 	 	      auth_desc=#{authDesc},
 	 	   </if>
-	 	   <if test="resource!=null and resource!=''">
-	 	      resource=#{resource},
+	 	   <if test="authResource!=null and authResource!=''">
+	 	      auth_resource=#{authResource},
 	 	  </if>
-	 	  <if test="sort!=null and sort!=''">
-	 	      sort=#{sort},
+	 	  <if test="authSort!=null and authSort!=''">
+	 	      auth_sort=#{authSort},
 	 	  </if>
 	 	  <if test="authType!=null">
 	 	      auth_type=#{authType},
 	 	  </if>
 	  </set>
-	   where id=#{id}
+	   where auth_id=#{authId}
 	</update>
 	
 	<!--根据用户id来查询权限 -->
 	<select id="getListByUserId" resultType="com.qhcs.ssm.entity.Auth">
 	
-		select a.* from sys_auth a,sys_role b,sys_role_auth c,sys_user_role d
-		where a.id=c.aid and b.id=c.rid and b.id=d.rid and d.uid=#{id}
+		select a.* from t_auth a,t_role b,t_auth_role c,t_employee_role d
+		where a.auth_id=c.auth_id and b.role_id=c.role_id and b.role_id=d.role_id and d.employee_id=#{employeeId}
 	
 	</select>
 </mapper>
