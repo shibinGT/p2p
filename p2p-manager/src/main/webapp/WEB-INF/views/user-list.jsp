@@ -50,7 +50,7 @@
 								<form class="form-group" action="${ctx }/user/list">
 									<div class="input-group">
 										<input name="name" placeholder="用户名" class="form-control"
-											value="${user.name }"> <span class="input-group-btn">
+											value="${user.employeeAccountNumber }"> <span class="input-group-btn">
 											<button class="btn btn-primary btn-sm" type="submit">查询</button>
 										</span>
 									</div>
@@ -98,8 +98,8 @@
 												type="checkbox" class="ace"> <span class="lbl"></span>
 										</label></td>
 
-										<td class=" "><a href="#">${user.name }</a></td>
-										<td class=" ">${user.password }</td>
+										<td class=" "><a href="#">${user.employeeAccountNumber }</a></td>
+										<td class=" ">${user.employeePassword }</td>
 
 
 
@@ -141,11 +141,6 @@
 
 	<script src="${ctx}/static/assets/js/typeahead-bs2.min.js"></script>
 
-	<!-- page specific plugin scripts -->
-
-	<!--[if lte IE 8]>
-		  <script src="${ctx}/static/assets/js/excanvas.min.js"></script>
-		<![endif]-->
 
 	<script src="${ctx}/static/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="${ctx}/static/assets/js/jquery.ui.touch-punch.min.js"></script>

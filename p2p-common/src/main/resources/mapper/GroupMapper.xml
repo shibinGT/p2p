@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qhcs.ssm.dao.GroupMapper" >
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    
+    <!-- public List<Group> quaryList(String groupCode); -->
+    <!-- 分组集合 -->
+    <resultMap id="groups" type="com.qhcs.ssm.entity.Group">
+        <id column="group_id" property="groupId"></id>
+        <result column="group_code" property="groupCode"></result>
+        <result column="group_desc" property="groupDesc"></result>
+        <collection property="userNames" ofType="java.lang.String">
+            <result column="employee_account_number" property="userNames"></result>
+        </collection>
+        <collection property="userIds" ofType="java.lang.String">
+            <result column="uid" property="userIds"></result>
+        </collection>
+        <collection property="roleCodes" ofType="java.lang.String">
+            <result column="role_code" property="roleCodes"></result>
+        </collection>
+        <collection property="roleIds" ofType="java.lang.String">
+            <result column="rid" property="roleIds"></result>
+        </collection>
+    </resultMap>
+    <!-- 根据分组编码查询 -->
+    <select id="quaryList"  resultMap="groups">
+        select g.`group_id`,g.`group_code`,g.`group_desc`,u.`employee_account_number`,r.`role_code`,u.`employee_id` uid,r.`role_id` rid 
+		from t_group g,t_employee u,t_role r,t_group_employee ug,t_group_role gr 
+		where g.group_id=ug.group_id and ug.employee_id = u.employee_id and g.group_id = gr.group_id and gr.role_id = r.role_id	
+        <if test="groupCode != null and groupCode !=''">
+            <bind name="likedesc" value="'%' + groupCode + '%'"/>
+            AND g.`group_code` LIKE #{likedesc}
+        </if>
+    </select>
+    <!-- public Group quaryById(Integer groupId); -->
+    <!-- 根据分组id查询分组信息 -->
+    <select id="quaryById"  resultMap="groups">
+        select g.`group_id`,g.`group_code`,g.`group_desc`,u.`employee_account_number`,r.`role_code`,u.`employee_id` uid,r.`role_id` rid  
+        from t_group g,t_employee u,t_role r,t_group_employee ug,t_group_role gr 
+        where g.`group_id`=ug.`group_id` and ug.`employee_id` = u.`employee_id` and g.`group_id` = gr.`group_id` and gr.`role_id` = r.`role_id`
+        and g.`group_id` = #{groupId}
+    </select>
+    
+    
+    <!-- public boolean delete(Integer id); -->
+    <!-- 根据id删除分组 -->
+    <delete id="delete">
+		delete g,ug,gr
+		from t_group g,t_employee u,t_role r,t_group_employee ug,t_group_role gr 
+		where g.`group_id`=ug.`group_id` and ug.`employee_id` = u.`employee_id` and g.`group_id` = gr.`group_id` and gr.`role_id` = r.`role_id`
+		and g.`group_id` = #{id}
+    </delete>
+    
+    
+    
+    <!-- public int batchDelete(@Param("lists") Integer[] lists); -->
+    <!-- 根据id数组 批量删除分组 -->
+    <delete id="batchDelete">
+		delete g,ug,gr
+		from t_group g,t_employee u,t_role r,t_group_employee ug,t_group_role gr 
+		where g.`group_id`=ug.`group_id` and ug.`employee_id` = u.`employee_id` and g.`group_id` = gr.`group_id` and gr.`role_id` = r.`role_id`
+		and g.`group_id` in
+            <foreach item="id" collection="lists" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+    </delete>
+	 
+	
+	
+	<!-- public boolean addGroup(Group group); -->
+	<!-- 增加一个分组信息 -->
+	<insert id="addGroup" useGeneratedKeys="true" keyProperty="groupId">
+	   INSERT INTO t_group (group_code,group_desc) VALUES (#{groupCode},#{groupDesc})
+	</insert>
+	<!-- public boolean batchAddRoles(Group group); -->
+	<!-- 批量增加一个分组的角色信息 -->
+	<insert id="batchAddRoles2">
+	   INSERT INTO t_group_role (group_id,role_id) VALUES
+	   <foreach collection="roleIds" item="roleId" separator=",">
+	       (#{id},#{roleId})
+	   </foreach>
+	</insert>
+	<!-- public boolean batchAddUsers(Group group); -->
+	<!-- 批量增加一个分组的用户信息 -->
+	<insert id="batchAddUsers">
+       INSERT INTO t_group_employee (group_id,employee_id) VALUE 
+       <foreach collection="userIds" item="userId" separator=",">
+           (#{id},#{userId})
+       </foreach>
+    </insert>
+	
+	
+	
+	
+    <!-- public boolean updateGroup(Group group); -->
+    <!-- 修改一个分组信息 -->
+	<update id="updateGroup">
+	   update t_group 
+        <set>
+            <if test="groupCode != null and groupCode !=''">
+                group_code = #{groupCode},
+            </if>
+            <if test="groupDesc != null and groupDesc !=''">
+                group_desc = #{groupDesc},
+            </if>
+        </set>
+        where group_id = #{groupId}
+	</update>
+   <!--  public boolean delRoles(Integer groupId); -->
+   <!-- 根据分组id删除分组里面的所有角色 -->
+   <delete id="delRoles">
+        DELETE FROM t_group_role WHERE group_id = #{groupId}
+   </delete>
+   <!-- public boolean delUsers(Integer groupId); -->
+   <!--  根据分组id删除分组里面的所有用户 -->
+   <delete id="delUsers">
+        DELETE FROM t_group_employee WHERE group_id = #{groupId}
+   </delete>
+    
+	
+</mapper>
