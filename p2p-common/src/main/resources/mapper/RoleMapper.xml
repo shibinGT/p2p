@@ -82,6 +82,12 @@
 		</where>
 	</select>
 	
+	
+	<!-- public List<Role> queryRoles(); -->
+	<select id="queryRoles()" resultType="com.qhcs.ssm.entity.Role">
+		select * from t_role 
+	</select>
+	
 	<!-- public Role selectById(Integer id); -->
 	<select id="selectById" resultType="com.qhcs.ssm.entity.Role">
 		select * from t_role where role_id= #{role_id}
