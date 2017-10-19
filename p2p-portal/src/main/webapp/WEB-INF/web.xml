@@ -43,24 +43,6 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-  <!-- 注册Shiro Filter -->
-    <filter>
-    	<!-- 过滤器名称 -->
-        <filter-name>shiroFilter</filter-name>
-        <!-- 过滤器的全类名 -->
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-        <!-- 用Spring来管理过滤器的生命周期 -->
-        <init-param>
-            <param-name>targetFilterLifecycle</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-	<!--配置Shiro Filter映射  -->
-    <filter-mapping>
-        <filter-name>shiroFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-	
   <!-- 配置druid的监控 -->
 	<servlet> 
 	     <servlet-name>DruidStatView</servlet-name> 
