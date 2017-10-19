@@ -1,0 +1,13 @@
+#investInfo{
+	border:1px red solid;
+}
+
+.f24 { font-size: 24px;}
+.c-orange { color: #ff6b00;}
+.borrow-list td{font-size:16px; vertical-align:middle}
+.borrow-list .title{padding:0 0 10px;height:25px;line-height:25px; overflow:hidden;}
+.borrow-list .title *{float:left;margin-right:6px;}
+.borrow-list .title .icon{width:18px;height:18px;margin:3px 0 0;}
+.borrow-list .title a:hover{text-decoration:underline;}
+.borrow-list .f24{display:inline-block;padding:0 5px;}
+.show-bar{ line-height:50px;}
