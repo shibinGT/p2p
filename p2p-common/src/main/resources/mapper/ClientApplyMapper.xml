@@ -7,7 +7,7 @@
 	
 	<!-- 用户提交借款申请 -->
 	<insert id="addClientApply" useGeneratedKeys="true" keyProperty="applyId">
-	insert into t_client_apply (`apply_name`, `apply_call`, `apply_money`, `apply_deadline`, `apply_location`, `apply_time`) values (#{applyName}, #{applyCall}, #{applyMoney}, #{applyDeadline}, #{applyLocation}, #{applyTime})
+	   insert into t_client_apply (`apply_name`, `apply_call`, `apply_money`, `apply_deadline`, `apply_location`, `apply_time`) values (#{applyName}, #{applyCall}, #{applyMoney}, #{applyDeadline}, #{applyLocation}, #{applyTime})
     </insert>
 	
 	
