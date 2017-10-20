@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qhcs.ssm.dao.TransactionRecordMapper">
+ <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+ <resultMap id="transactionRecordMap" type="com.qhcs.ssm.entity.TransactionRecord" >
+    <id column="transaction_record_id" property="transactionRecordId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="transaction_record_date" property="transactionRecordDate" jdbcType="TIMESTAMP" />
+    <result column="transaction_record_type" property="transactionRecordType" jdbcType="VARCHAR" />
+    <result column="transaction_record_amount" property="transactionRecordAmount" jdbcType="DOUBLE" />
+    <result column="transaction_record_available_capital" property="transactionRecordAvailableCapital" jdbcType="DOUBLE" />
+    <result column="transaction_record_comment" property="transactionRecordComment" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <!-- addTransactionRecord(TransactionRecord transactionRecord) 添加一条交易记录-->
+  <insert id="addTransactionRecord" parameterType="com.qhcs.ssm.entity.TransactionRecord">
+    insert into t_transaction_record (user_id, transaction_record_date, 
+      transaction_record_type, transaction_record_amount, 
+      transaction_record_available_capital, transaction_record_comment
+      )
+    values (#{transactionRecordId}, #{userId}, #{transactionRecordDate}, 
+      #{transactionRecordType}, #{transactionRecordAmount}, 
+      #{transactionRecordAvailableCapital}, #{transactionRecordComment}
+      )
+  </insert>
+  
+  <!-- addSelectiveTransactionRecord(TransactionRecord transactionRecord) 动态添加交易记录 -->
+  <insert id="addSelectiveTransactionRecord" parameterType="com.qhcs.ssm.entity.TransactionRecord">
+    insert into t_transaction_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="transactionRecordDate != null" >
+        transaction_record_date,
+      </if>
+      <if test="transactionRecordType != null" >
+        transaction_record_type,
+      </if>
+      <if test="transactionRecordAmount != null" >
+        transaction_record_amount,
+      </if>
+      <if test="transactionRecordAvailableCapital != null" >
+        transaction_record_available_capital,
+      </if>
+      <if test="transactionRecordComment != null" >
+        transaction_record_comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="transactionRecordDate != null" >
+        #{transactionRecordDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transactionRecordType != null" >
+        #{transactionRecordType,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionRecordAmount != null" >
+        #{transactionRecordAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionRecordAvailableCapital != null" >
+        #{transactionRecordAvailableCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionRecordComment != null" >
+        #{transactionRecordComment,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <!-- queryTransactionRecords(TransactionRecord transactionRecord) 动态查询交易记录 -->
+  <select id="queryTransactionRecords" resultMap="transactionRecordMap">
+    select * from t_transaction_record
+    <where>
+      <if test="userId != null" >
+        user_id=#{userId}
+      </if>
+      <if test="transactionRecordDate != null" >
+        and transaction_record_date=#{transactionRecordDate}
+      </if>
+      <if test="transactionRecordType != null" >
+        and transaction_record_type=#{transactionRecordType}
+      </if>
+      <if test="transactionRecordAmount != null" >
+        and transaction_record_amount=#{transactionRecordAmount}
+      </if>
+      <if test="transactionRecordAvailableCapital != null" >
+        and transaction_record_available_capital=#{transactionRecordAvailableCapital}
+      </if>
+      <if test="transactionRecordComment != null" >
+        and transaction_record_comment=#{transactionRecordComment}
+      </if>
+    </where>
+  </select>
+</mapper>
