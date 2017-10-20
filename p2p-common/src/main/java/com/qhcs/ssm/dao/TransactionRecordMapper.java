@@ -1,8 +1,15 @@
 package com.qhcs.ssm.dao;
 import java.util.List;
 
+
 import com.qhcs.ssm.entity.TransactionRecord;
 
+/**
+ * 
+* @Description: 交易记录数据库接口,实现交易记录的新增与查询
+* @author wwx
+* @date 2017年10月20日 上午10:09:53
+ */
 public interface TransactionRecordMapper {
 	/**
 	 * 
