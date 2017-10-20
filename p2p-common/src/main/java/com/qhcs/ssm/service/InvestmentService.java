@@ -18,9 +18,11 @@ import com.qhcs.ssm.entity.Investment;
 * @date 2017年10月19日 下午4:41:26
  */
 @Service
-public class InvestmentService {
-	@Autowired
-	private BaseEntity baseEntity;
+public class InvestmentService extends BaseEntity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private InvestmentMapper investmentMapper;
 	
@@ -54,7 +56,7 @@ public class InvestmentService {
 	 * @return：返回投资记录
 	 */
 	public PageInfo<Investment> queryInvestmentsByUserId(Integer userId){
-    PageHelper.startPage(baseEntity.getPageNum(), baseEntity.getPageSize());
+    PageHelper.startPage(getPageNum(),getPageSize());
 		
 		List<Investment> investments = investmentMapper.queryInvestmentsByUserId(userId);
 		//封装，把list封装成 PageInfo
@@ -71,7 +73,7 @@ public class InvestmentService {
 	 * @return：返回投资记录
 	 */
 	public PageInfo<Investment> queryInvestmentsByProjectId(Integer projectId){
-    PageHelper.startPage(baseEntity.getPageNum(), baseEntity.getPageSize());
+    PageHelper.startPage(getPageNum(),getPageSize());
 		
 		List<Investment> investments = investmentMapper.queryInvestmentsByUserId(projectId);
 		//封装，把list封装成 PageInfo
