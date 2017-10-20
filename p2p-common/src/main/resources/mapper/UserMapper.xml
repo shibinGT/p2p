@@ -5,63 +5,29 @@
 <mapper namespace="com.qhcs.ssm.dao.UserMapper" >
 	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 	<!-- 
-		public User queryUserById(Integer id);
+		public User queryUserById(Integer id);根据ID查找用户信息
 	 -->
 	 
 	 <select id="queryUserById" resultType="com.qhcs.ssm.entity.User">
 	 	select * from sys_user where id=#{id}
 	 </select>
 	
-	<!-- queryUserByName -->
+	<!-- queryUserByName 根据用户名查找用户信息-->
 
      <select id="queryUserByName" resultType="com.qhcs.ssm.entity.User">
-        select * from sys_user where name=#{name}
+        select * from t_user where user_name=#{userName}
+     </select>
+     <!-- queryUserByName 根据手机号查找用户信息-->
+
+     <select id="queryUserByPhone" resultType="com.qhcs.ssm.entity.User">
+        select * from t_user where user_phone=#{userPhone}
      </select>
      
-     <!-- public boolean addNomalUser(User user) -->
+     <!-- public boolean addNomalUser(User user) 添加用户-->
      
-     <insert id="addNomalUser" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_user (name,password) values (#{name},#{password})
+     <insert id="addUser" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user (user_name,user_referrer,user_password,user_phone) values (#{userName},#{userReferrer},#{userPassword},#{userPhone})
      </insert>
      	
-     	
-    <!-- public boolean addNomalUserRole(Long id); -->
-    
-    <insert id="addNomalUserRole">
-        insert into sys_user_role (uid,rid) values (#{id},2)
-     </insert>
-   <!--  public boolean addAdminRole(Integer uid, Integer rid); -->
-   
-		<insert id="addAdminRole">
-		        insert into sys_user_role (uid,rid) values(#{uid},#{rid})
-		</insert>
-	<!-- 
-		public List<User> queryList(User user);
-	 -->
-	 
-	 <select id="queryList" resultType="com.qhcs.ssm.entity.User">
-	 	select * from sys_user 
-		<where>
-			<if test="name!=null and name!=''">
-				 <bind name="likename" value="'%'+name+'%'"/>
-				  and name like #{likename}
-			</if>
-		</where>	 	
-	 </select>
-	 
-	 <delete id="del">
-	 	delete from sys_user where id=#{id}
-	 </delete>
 
-	 <delete id="delUserRole" >
-	 	delete from sys_user_role a where uid=#{id}
-	 
-	 </delete>
-	 
-	 <!--  public boolean queryRole(); -->
-	 <select id="queryRole" resultType="com.qhcs.ssm.entity.Role">
-	 	select * from sys_role
-	 </select>
-	 
-	
 </mapper>

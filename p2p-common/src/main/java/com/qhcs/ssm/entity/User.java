@@ -1,7 +1,4 @@
 package com.qhcs.ssm.entity;
-
-import java.util.List;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -16,52 +13,101 @@ public class User extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	private Integer id;
+	private Integer userId;
 	// 用户名称
 	@NotEmpty
-	private String name;
+	private String userName;
 	// 密码
 	@NotEmpty
-	private String password;
-
-	// 拥有角色
-	private List<Integer> roleid;
-
-	public List<Integer> getRoleid() {
-		return roleid;
+	private String userPassword;
+	//推荐人
+	private String userReferrer;
+	//真实姓名
+	private String userRealName;
+	//身份证
+	private String userIdCard;
+	//邮箱
+	private String userEmail;
+	//手机号
+	private String userPhone;
+	//用户状态
+	private String userState;
+	public Integer getUserId() {
+		return userId;
 	}
-
-	public void setRoleid(List<Integer> roleid) {
-		this.roleid = roleid;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
-
-	public Integer getId() {
-		return id;
+	public String getUserName() {
+		return userName;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-
-	public String getName() {
-		return name;
+	public String getUserPassword() {
+		return userPassword;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
-
-	public String getPassword() {
-		return password;
+	public String getUserReferrer() {
+		return userReferrer;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserReferrer(String userReferrer) {
+		this.userReferrer = userReferrer;
 	}
-
+	public String getUserRealName() {
+		return userRealName;
+	}
+	public void setUserRealName(String userRealName) {
+		this.userRealName = userRealName;
+	}
+	public String getUserIdCard() {
+		return userIdCard;
+	}
+	public void setUserIdCard(String userIdCard) {
+		this.userIdCard = userIdCard;
+	}
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+	public String getUserPhone() {
+		return userPhone;
+	}
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+	public String getUserState() {
+		return userState;
+	}
+	public void setUserState(String userState) {
+		this.userState = userState;
+	}
+	public User(Integer userId, String userName, String userPassword, String userReferrer, String userRealName,
+			String userIdCard, String userEmail, String userPhone, String userState) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.userReferrer = userReferrer;
+		this.userRealName = userRealName;
+		this.userIdCard = userIdCard;
+		this.userEmail = userEmail;
+		this.userPhone = userPhone;
+		this.userState = userState;
+	}
+	public User() {
+		super();
+	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password + ", roleid=" + roleid + "]";
+		return "User [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword
+				+ ", userReferrer=" + userReferrer + ", userRealName=" + userRealName + ", userIdCard=" + userIdCard
+				+ ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userState=" + userState + "]";
 	}
+	
 
 }
