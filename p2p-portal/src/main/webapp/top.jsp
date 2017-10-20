@@ -9,10 +9,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link href="static/css/common.css" rel="stylesheet" />
-<link href="static/css/register.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="static/script/jquery.min.js"></script>
-<script type="text/javascript" src="static/script/common.js"></script>
+<link href="${ctx}/static/css/common.css" rel="stylesheet" />
+<link href="${ctx}/static/css/register.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${ctx}/static/script/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/common.js"></script>
 </head>
 <body>
     <header>
@@ -24,7 +24,7 @@
                     <li class="c_1"><a class="ico_head_weixin" id="wx"></a>
                         <div class="ceng" id="weixin_xlgz" style="display: none;">
                             <div class="cnr">
-                                <img src="static/images/code.png">
+                                <img src="${ctx}/static/images/code.png">
                             </div>
                             <b class="ar_up ar_top"></b> <b class="ar_up_in ar_top_in"></b>
                         </div></li>
@@ -51,14 +51,14 @@
         <div class="header min-width">
             <div class="container">
                 <div class="fn-left logo">
-                    <a class="" href="index.html"> <img src="static/images/logo.png"
+                    <a class="" href="index.html"> <img src="${ctx}/static/images/logo.png"
                         title="">
                     </a>
                 </div>
                 <ul class="top-nav fn-clear">
-                    <li class="on"><a href="index.html" class="${param.index }">首页</a></li>
+                    <li class="on"><a href="${ctx}/index.jsp" class="${param.index }">首页</a></li>
                     <li><a href="${ctx}/investment/projectList" class="${param.investment}">我要投资</a></li>
-                    <li><a href="apply.html" class="${param.index }">我要借款</a></li>
+                    <li><a href="${ctx }/client/toApply" class="${param.apply }">我要借款</a></li>
                     <li><a href="帮助中心.html" class="${param.index }">安全保障</a></li>
                     <li class="top-nav-safe"><a href="个人中心首页.html" class="${param.index }">我的账户</a></li>
                     <li><a href="公司简介.html" class="${param.index }">关于我们</a></li>
