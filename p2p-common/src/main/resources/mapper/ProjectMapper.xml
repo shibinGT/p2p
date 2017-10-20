@@ -13,7 +13,28 @@
 	<update id="updateStatus" parameterType="com.qhcs.ssm.entity.Project">
 	  update t_project
 	  <set>
-	 	   <if test="projectStatus!=null and projectStatus!=''">
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 1">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 2">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 3">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 4">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 5">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 6">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == -1">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == -2">
 	 	      project_status=#{projectStatus},
 	 	   </if>
 	  </set>
