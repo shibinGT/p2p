@@ -42,10 +42,11 @@ private String[] pa;
 		 Object o=hsr.getSession().getAttribute("loginUser");
 		 String path=hsr.getServletPath();		
 		 String contextpath=request.getServletContext().getContextPath();
+		 String oldURL=hsr.getRequestURI();
 		 //如果为空，刚返回登陆界面
 		 if(o==null&&!onThePath(path)){
 			//把防问前URL放进session
-			hsr.getSession().setAttribute("oldURL", path);
+			hsr.getSession().setAttribute("oldURL", oldURL);
 			 hsp.sendRedirect(contextpath+"/tologin");
 			 return;
 		 }	

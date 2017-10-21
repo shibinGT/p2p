@@ -91,7 +91,7 @@
     <init-param>
     	<!-- 不拦截的URL -->
       <param-name>nologinUrl</param-name>
-      <param-value>/static;/index;/login;/toregister;/register;/tologin;/getSendPhone;/getCode;</param-value>
+      <param-value>/toforgetpassword;/forgetpassword;/toupdatepasswordsucceed;/checkUserReferrer;/tosucceed;/static;/index;/login;/toregister;/register;/tologin;/getSendPhone;/getCode;/checkUserName;/checkJpgVerify;/checkPhone;</param-value>
     </init-param>
   </filter>
   <filter-mapping>
