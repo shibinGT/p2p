@@ -59,9 +59,12 @@ public class UserCenterController {
 		List<ReturnPlan> returnList= planService.queryReturnList();
 		model.addAttribute("returnList", returnList);
 		
-		//交易记录
+		//资金记录
 		List<TransactionRecord> record=transactionRecordService.queryTransactionRecordByUserId(userID);
 		model.addAttribute("record", record);
+		
+		//投资记录
+		
 		
 		return "userCenterIndex";
 	}
