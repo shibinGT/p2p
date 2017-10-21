@@ -7,10 +7,14 @@ package com.qhcs.ssm.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qhcs.ssm.dao.ProjectMapper;
+import com.qhcs.ssm.entity.BorrowMoney;
 import com.qhcs.ssm.entity.Project;
 
 /**
@@ -33,8 +37,12 @@ public class ProjectService {
 	 * @author xms
 	 * @return Project
 	 */
-	public List<Project> getList(Project project) {
-		return projectMapper.getList(project);
+	public PageInfo<Project> getList(Project project) {
+       PageHelper.startPage(project.getPageNum(), project.getPageSize());
+		List<Project> projects = projectMapper.getList(project);
+		//封装，把list封装成 PageInfo
+		PageInfo<Project> page = new PageInfo<>(projects);
+		return page;
 	}
 
 	/**
@@ -50,5 +58,28 @@ public class ProjectService {
 	public boolean updateStatus(Project project) {
 		return projectMapper.updateStatus(project);
 	}
-
+	
+	
+	/**
+	 * 
+	 * @Description:根据项目id查询项目详细信息
+	 * @author：wwx
+	 * @param:项目id
+	 * @return：返回项目实例
+	 */
+	public Project queryProjectByProjectId(Integer projectId){
+		return projectMapper.queryProjectByProjectId(projectId);
+	}
+	
+	
+	/**
+	 * 
+	 * @Description:根据项目id查询对应的借款信息
+	 * @author：wwx
+	 * @param:项目id
+	 * @return：借款信息实例
+	 */
+	public BorrowMoney queryBorrowMoneyByProjectId(Integer projectId){
+		return projectMapper.queryBorrowMoneyByProjectId(projectId);
+	}
 }

@@ -46,4 +46,13 @@ public interface InvestmentMapper {
 	 * @return：返回投资记录
 	 */
 	public List<Investment> queryInvestmentsByProjectId(Integer projectId);
+	
+	/**
+	 * 
+	 * @Description:根据项目id查询 该项目的投资总额
+	 * @author：wwx
+	 * @param:项目id
+	 * @return：返回投资总额
+	 */
+	public Double queryTotalMoneyByProjectId(Integer projectId);
 }
