@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qhcs.ssm.dao.ProjectMapper">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+	
+	<!-- public List<Project> getList(Project project); -->
+	<select id="getList" resultType="com.qhcs.ssm.entity.Project">
+		select * from t_project 
+	</select>
+	
+	<!-- public boolean updateStatus(Project project); 根据ID修改项目状态  -->
+	<update id="updateStatus" parameterType="com.qhcs.ssm.entity.Project">
+	  update t_project
+	  <set>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 1">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 2">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 3">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 4">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 5">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == 6">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == -1">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	 	   <if test="projectStatus!=null and projectStatus!='' and projectStatus == -2">
+	 	      project_status=#{projectStatus},
+	 	   </if>
+	  </set>
+	   where project_id=#{projectId}
+	</update>
+	
+</mapper>

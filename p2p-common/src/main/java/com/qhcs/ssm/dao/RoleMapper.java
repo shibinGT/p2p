@@ -84,6 +84,8 @@ public interface RoleMapper {
 	 */
 	public List<Role> queryList(Role role);
 
+	public List<Role> queryRoles();
+
 	/**
 	 * 删除角色对应的权限
 	 * 

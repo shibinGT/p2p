@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.qhcs.ssm.dao.InvestmentMapper" >
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	
+   <resultMap id="investmentMap" type="com.qhcs.ssm.entity.Investment" >
+      <id column="investment_id" property="investmentId" />
+      <result column="user_id" property="userId" />
+      <result column="investment_date" property="investmentDate"  />
+      <result column="project_id" property="projectId" />
+      <result column="investment_status" property="investmentStatus" />
+      <result column="investment_money" property="investmentMoney" />
+      <result column="investment_earning" property="investmentEarning" />
+   </resultMap>
+    
+    <!-- addInvestment(Investment investment) 新增一条投资记录 -->
+	<insert id="addInvestment" parameterType="com.qhcs.ssm.entity.Investment">
+	  insert into t_investment (user_id, investment_date, 
+      project_id, investment_status, investment_money, 
+      investment_earning)
+      values (#{userId}, #{investmentDate}, #{projectId}, #{investmentStatus}, 
+      #{investmentMoney}, #{investmentEarning)
+	</insert>
+	
+	<!-- updateInvestmentStatus(Integer investmentStatus) 修改投资状态 -->
+	<update id="updateInvestmentStatus">
+	  update t_investment set investment_status=#{investmentStatus}
+	</update>
+	
+	<!-- queryInvestmentsByUserId 根据投资人id查询投资记录 -->
+	<select id="queryInvestmentsByUserId" resultMap="investmentMap">
+	  select * from t_investment where user_id=#{userId}
+	</select>
+	
+	
+	<!-- queryInvestmentsByProjectId 根据项目id查询投资记录 -->
+	<select id="queryInvestmentsByProjectId" resultMap="investmentMap">
+	  select * from t_investment where project_id=#{projectId}
+	</select>
+	
+	<!-- queryTotalMoneyByProjectId 根据项目id查询 该项目的投资总额-->
+	<select id="queryTotalMoneyByProjectId">
+	  select sum(investment_money) from t_investment where project_id=#{projectId}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</mapper>

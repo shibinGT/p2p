@@ -4,80 +4,80 @@ import java.sql.Date;
 
 /**
  * 
- * @author Administrator
- * @date 2017年10月20日
- * @desc 交易记录
- * 
+* @Description: 交易记录实体类：表示账户资金所有流水，包括投资记录，充值，提现记录等
+* @author wwx
+* @date 2017年10月20日 上午9:45:26
  */
 public class TransactionRecord extends BaseEntity{
+	private static final long serialVersionUID = 1L;
+	//交易记录id
+    private Integer transactionRecordId;
+    //用户id
+    private Integer userId;
+    //交易时间
+    private Date transactionRecordDate;
+    //交易类型
+    private String transactionRecordType;
+    //交易金额
+    private Double transactionRecordAmount;
+    //账户可用资金
+    private Double transactionRecordAvailableCapital;
+    //备注
+    private String transactionRecordComment;
 
-	// 用户ID
-	private Integer userId;
-	// 交易时间
-	private Date transactionRecordDate;
-	// 交易类型
-	private String transactionRecordType;
-	// 交易金额
-	private Double transactionRecordAmount;
-	// 账户可用资金
-	private Double transactionRecordAvailableCapital;
-	// 备注
-	private String transactionRecordComment;
+    public Integer getTransactionRecordId() {
+        return transactionRecordId;
+    }
 
-	public Integer getUserId() {
-		return userId;
-	}
+    public void setTransactionRecordId(Integer transactionRecordId) {
+        this.transactionRecordId = transactionRecordId;
+    }
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+    public Integer getUserId() {
+        return userId;
+    }
 
-	public Date getTransactionRecordDate() {
-		return transactionRecordDate;
-	}
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-	public void setTransactionRecordDate(Date transactionRecordDate) {
-		this.transactionRecordDate = transactionRecordDate;
-	}
+    public Date getTransactionRecordDate() {
+        return transactionRecordDate;
+    }
 
-	public String getTransactionRecordType() {
-		return transactionRecordType;
-	}
+    public void setTransactionRecordDate(Date transactionRecordDate) {
+        this.transactionRecordDate = transactionRecordDate;
+    }
 
-	public void setTransactionRecordType(String transactionRecordType) {
-		this.transactionRecordType = transactionRecordType;
-	}
+    public String getTransactionRecordType() {
+        return transactionRecordType;
+    }
 
-	public Double getTransactionRecordAmount() {
-		return transactionRecordAmount;
-	}
+    public void setTransactionRecordType(String transactionRecordType) {
+        this.transactionRecordType = transactionRecordType == null ? null : transactionRecordType.trim();
+    }
 
-	public void setTransactionRecordAmount(Double transactionRecordAmount) {
-		this.transactionRecordAmount = transactionRecordAmount;
-	}
+    public Double getTransactionRecordAmount() {
+        return transactionRecordAmount;
+    }
 
-	public Double getTransactionRecordAvailableCapital() {
-		return transactionRecordAvailableCapital;
-	}
+    public void setTransactionRecordAmount(Double transactionRecordAmount) {
+        this.transactionRecordAmount = transactionRecordAmount;
+    }
 
-	public void setTransactionRecordAvailableCapital(Double transactionRecordAvailableCapital) {
-		this.transactionRecordAvailableCapital = transactionRecordAvailableCapital;
-	}
+    public Double getTransactionRecordAvailableCapital() {
+        return transactionRecordAvailableCapital;
+    }
 
-	public String getTransactionRecordComment() {
-		return transactionRecordComment;
-	}
+    public void setTransactionRecordAvailableCapital(Double transactionRecordAvailableCapital) {
+        this.transactionRecordAvailableCapital = transactionRecordAvailableCapital;
+    }
 
-	public void setTransactionRecordComment(String transactionRecordComment) {
-		this.transactionRecordComment = transactionRecordComment;
-	}
+    public String getTransactionRecordComment() {
+        return transactionRecordComment;
+    }
 
-	@Override
-	public String toString() {
-		return "TransactionRecord [userId=" + userId + ", transactionRecordDate=" + transactionRecordDate
-				+ ", transactionRecordType=" + transactionRecordType + ", transactionRecordAmount="
-				+ transactionRecordAmount + ", transactionRecordAvailableCapital=" + transactionRecordAvailableCapital
-				+ ", transactionRecordComment=" + transactionRecordComment + "]";
-	}
-
+    public void setTransactionRecordComment(String transactionRecordComment) {
+        this.transactionRecordComment = transactionRecordComment == null ? null : transactionRecordComment.trim();
+    }
 }
