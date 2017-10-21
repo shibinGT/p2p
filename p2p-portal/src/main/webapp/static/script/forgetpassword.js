@@ -6,23 +6,13 @@ $().ready(function() {
 	    return this.optional(element) || (length == 11 && mobile.test(value));  
 	}, "请正确填写您的手机号码"); 
 	
-  $("#registerForm").validate({
+  $("#updatepasswordForm").validate({
 	  //验证方式，鼠标离开就验证
 	  onfocusout: function(element) { $(element).valid(); }, 
     rules: {
       userName: {
         required: true,
         minlength: 2,
-        remote:{
-        	 url: "checkUserName",     //后台处理程序
-        	    type: "post",               //数据发送方式
-        	    dataType: "json",           //接受数据格式   
-        	    data: {                     //要传递的数据
-        	        userName: function() {
-        	            return $("#userName").val();
-        	        }
-        	    }
-        }
       },
       userPassword: {
         required: true,
@@ -49,43 +39,18 @@ $().ready(function() {
       userPhone:{
     	  isMobile:true,
     	  required: true,
-    	  remote:{
-            	 url: "checkPhone",     //后台处理程序
-         	    type: "post",               //数据发送方式
-         	    dataType: "json",           //接受数据格式   
-         	    data: {                     //要传递的数据
-         	    	userPhone: function() {
-         	            return $("#userPhone").val();
-         	        }
-         	    }
-            }
       },
       phonVerify:{ //手机验证码
     	   required: true,
       },
-      userReferrer:{
-    	  remote:{
-         	 url: "checkUserReferrer",     //后台处理程序
-      	    type: "post",               //数据发送方式
-      	    dataType: "json",           //接受数据格式   
-      	    data: {                     //要传递的数据
-      	    	userReferrer: function() {
-      	            return $("#userReferrer").val();
-      	        }
-      	    }
-         }
-      },
-      protocol:"required" //协议
+
     },
     messages: {
       userName: {
         required: "请输入用户名",
-        minlength: "用户名必需由两个字母组成",
-        remote:"用户名已存在"
+        minlength: "用户名必需由两个字母组成",    
       },
-      userReferrer:{
-    	remote:"推荐人不存在"  
-      },
+ 
       userPassword: {
         required: "请输入密码",
         minlength: "密码长度不能小于 5 个字母"
@@ -102,18 +67,15 @@ $().ready(function() {
         userPhone: {
             required: "请输入手机号",    
             isMobile:"请正确填写您的手机号码",
-            remote:"手机号已存在"
+         
           }, 
         phonVerify: {
             required: "请输入验证码",
-          }, 
-          protocol:"请同意协议"
+          }
     }
-})
-
-	
-//提交注册
-$('#registerSubmit').click(function() {		
+})	
+//提交修改
+$('#updatepasswordFormSubmit').click(function() {		
 	// md5 对密码进行加密24次
 		var password = $("#userPassword").val();
 		for (var i = 0; i < 24; i++) {
@@ -121,6 +83,6 @@ $('#registerSubmit').click(function() {
 		}
 		$("#userPassword").val(password);
 		$("#repeatPassword").val(password);			
-		$('#registerForm').submit();		
+		$('#updatepasswordForm').submit();		
 });
 });

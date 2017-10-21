@@ -5,7 +5,7 @@
   <mapper namespace="com.qhcs.ssm.dao.InvestmentMapper" >
 	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 	
-	<resultMap id="investmentMap" type="com.qhcs.ssm.entity.Investment" >
+   <resultMap id="investmentMap" type="com.qhcs.ssm.entity.Investment" >
       <id column="investment_id" property="investmentId" />
       <result column="user_id" property="userId" />
       <result column="investment_date" property="investmentDate"  />
@@ -38,6 +38,11 @@
 	<!-- queryInvestmentsByProjectId 根据项目id查询投资记录 -->
 	<select id="queryInvestmentsByProjectId" resultMap="investmentMap">
 	  select * from t_investment where project_id=#{projectId}
+	</select>
+	
+	<!-- queryTotalMoneyByProjectId 根据项目id查询 该项目的投资总额-->
+	<select id="queryTotalMoneyByProjectId">
+	  select sum(investment_money) from t_investment where project_id=#{projectId}
 	</select>
 	
 	

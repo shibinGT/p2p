@@ -25,9 +25,16 @@
      
      <!-- public boolean addNomalUser(User user) 添加用户-->
      
-     <insert id="addUser" useGeneratedKeys="true" keyProperty="id">
-        insert into t_user (user_name,user_referrer,user_password,user_phone) values (#{userName},#{userReferrer},#{userPassword},#{userPhone})
+     <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">
+        insert into t_user (user_name,user_referrer,user_password,user_phone,user_status) values (#{userName},#{userReferrer},#{userPassword},#{userPhone},0)
      </insert>
      	
-
+     	<!-- 改变状态 -->
+		<update id="updateUserStatus">
+		update t_user set user_status=#{userStatus} where user_name=#{userName}
+		</update>
+		<!-- 修改密码 -->
+		<update id="updateUserPassword">
+		update t_user set user_password=#{userPassword} where user_name=#{userName}
+		</update>
 </mapper>

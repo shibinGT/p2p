@@ -80,5 +80,17 @@ public class InvestmentService extends BaseEntity{
 		PageInfo<Investment> page = new PageInfo<>(investments);
 		return page;
 	}
+	
+	
+	/**
+	 * 
+	 * @Description:根据项目id查询 该项目的投资总额
+	 * @author：wwx
+	 * @param:项目id
+	 * @return：返回投资总额
+	 */
+	public Double queryTotalMoneyByProjectId(Integer projectId){
+		return investmentMapper.queryTotalMoneyByProjectId(projectId);
+	}
 
 }
