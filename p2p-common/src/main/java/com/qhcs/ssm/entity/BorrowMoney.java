@@ -154,4 +154,17 @@ public class BorrowMoney {
 	public void setBorrowMoneyAuditorDate(Date borrowMoneyAuditorDate) {
 		this.borrowMoneyAuditorDate = borrowMoneyAuditorDate;
 	}
+
+	@Override
+	public String toString() {
+		return "BorrowMoney [borrowMoneyId=" + borrowMoneyId + ", userId=" + userId + ", borrowMoneyMessage="
+				+ borrowMoneyMessage + ", borrowMoneyWork=" + borrowMoneyWork + ", borrowMoneyType=" + borrowMoneyType
+				+ ", borrowMoneyUse=" + borrowMoneyUse + ", borrowMoneySum=" + borrowMoneySum + ", borrowMoneyAsset="
+				+ borrowMoneyAsset + ", borrowMoneyUseType=" + borrowMoneyUseType + ", borrowMoneyDate="
+				+ borrowMoneyDate + ", borrowMoneyDeadline=" + borrowMoneyDeadline + ", borrowMoneyOptatorId="
+				+ borrowMoneyOptatorId + ", borrowMoneyOpetatorChangeTime=" + borrowMoneyOpetatorChangeTime
+				+ ", borrowMoneyAuditorId=" + borrowMoneyAuditorId + ", borrowMoneyAuditorDate="
+				+ borrowMoneyAuditorDate + "]";
+	}
+	
 }

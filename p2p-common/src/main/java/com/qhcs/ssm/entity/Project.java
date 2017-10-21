@@ -1,6 +1,7 @@
 package com.qhcs.ssm.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Project extends BaseEntity {
 
@@ -8,10 +9,8 @@ public class Project extends BaseEntity {
 	 * TODO
 	 */
 	private static final long serialVersionUID = 1L;
-
 	// 项目表编码/id
 	private Integer projectId;
-
 	// 项目标题
 	private String projectTitle;
 	// 项目发行时间
@@ -21,7 +20,7 @@ public class Project extends BaseEntity {
 	// 项目筹款金额
 	private Double projectRaiseMoney;
 	// 项目筹款期限
-	private Date projectRaiseDeadline;
+	private Integer projectRaiseDeadline;
 	// 项目利率
 	private Double projectRate;
 	// 项目状态：默认为0
@@ -40,9 +39,9 @@ public class Project extends BaseEntity {
 	// 借款
 	private BorrowMoney borrowMoney;
 	// 投资
-	private Investment investment;
+	private List<Investment> investments;
 	// 还款记录
-	private Repayment repayment;
+	private List<Repayment> repayments;
 	// 风控
 	private RiskAssessment riskAssessment;
 
@@ -71,23 +70,24 @@ public class Project extends BaseEntity {
 		this.borrowMoney = borrowMoney;
 	}
 
-	public Investment getInvestment() {
-		return investment;
+	
+	public List<Investment> getInvestments() {
+		return investments;
 	}
 
-	public void setInvestment(Investment investment) {
-		this.investment = investment;
+	public void setInvestments(List<Investment> investments) {
+		this.investments = investments;
 	}
 
-	public Repayment getRepayment() {
-		return repayment;
+	public List<Repayment> getRepayments() {
+		return repayments;
 	}
 
-	public void setRepayment(Repayment repayment) {
-		this.repayment = repayment;
+	public void setRepayments(List<Repayment> repayments) {
+		this.repayments = repayments;
 	}
 
-	public RiskAssessment getRiskAssessment() {
+	public RiskAssessment getRiskAssessment() { 
 		return riskAssessment;
 	}
 
@@ -131,11 +131,11 @@ public class Project extends BaseEntity {
 		this.projectRaiseMoney = projectRaiseMoney;
 	}
 
-	public Date getProjectRaiseDeadline() {
+	public Integer getProjectRaiseDeadline() {
 		return projectRaiseDeadline;
 	}
 
-	public void setProjectRaiseDeadline(Date projectRaiseDeadline) {
+	public void setProjectRaiseDeadline(Integer projectRaiseDeadline) {
 		this.projectRaiseDeadline = projectRaiseDeadline;
 	}
 
@@ -181,6 +181,18 @@ public class Project extends BaseEntity {
 
 	public Date getProjectAuditorDate() {
 		return projectAuditorDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Project [projectId=" + projectId + ", projectTitle=" + projectTitle + ", projectIssueTime="
+				+ projectIssueTime + ", projectLoanTime=" + projectLoanTime + ", projectRaiseMoney=" + projectRaiseMoney
+				+ ", projectRaiseDeadline=" + projectRaiseDeadline + ", projectRate=" + projectRate + ", projectStatus="
+				+ projectStatus + ", projectOptatorId=" + projectOptatorId + ", projectOpetatorChangeTime="
+				+ projectOpetatorChangeTime + ", projectAuditorId=" + projectAuditorId + ", projectAuditorDate="
+				+ projectAuditorDate + ", clientApply=" + clientApply + ", borrowMoney=" + borrowMoney
+				+ ", investments=" + investments + ", repayments=" + repayments + ", riskAssessment=" + riskAssessment
+				+ "]";
 	}
 
 	public void setProjectAuditorDate(Date projectAuditorDate) {
