@@ -1,5 +1,7 @@
 package com.qhcs.ssm.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.qhcs.ssm.entity.User;
 
 /**
@@ -51,5 +53,24 @@ public interface UserMapper {
 	 * @return
 	 */
 	public boolean addUser(User user);
-
+/**
+ * 
+ *TODO:改变用户状态
+ *@version:2017年10月20日
+ *@aothor：shibin
+ * @param userStatus
+ * @param userName
+ * @return
+ */
+	public boolean updateUserStatus(Integer userStatus,String userName);
+	/**
+	 * 
+	 *TODO:修改密码
+	 *@version:2017年10月21日
+	 *@aothor：shibin
+	 * @param userPassword
+	 * @param userName
+	 * @return
+	 */
+	public boolean updateUserPassword(@Param("userPassword")String userPassword,@Param("userName")String userName);
 }

@@ -7,18 +7,21 @@
 <title>p2p网贷平台</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<link href="${ctx}/static/css/common.css" rel="stylesheet" />
-<link href="${ctx}/static/css/register.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="${ctx}/static/script/jquery.min.js"></script>
-<script type="text/javascript" src="${ctx}/static/script/common.js"></script>
-
-<script src="${ctx}/static/script/md5.js" type="text/javascript"></script>
-</head>
-<body>
 <!-- 页面头部 -->
 	<jsp:include page="/top.jsp">
 	    <jsp:param value="title" name="apply"/>
 	</jsp:include>
+	<script type="text/javascript" src="${ctx}/static/script/jquery.validate.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/messages_zh.js"></script>
+<script src="${ctx}/static/script/login.js" type="text/javascript"></script>	
+<script src="${ctx}/static/script/md5.js" type="text/javascript"></script>
+<style>
+.error{
+	color:red;
+}
+</style>
+</head>
+<body>
 <!--登录-->
 <div class="wrap">
  <form id="LonginForm" name="LonginForm" action="<%=request.getServletContext().getContextPath()%>/login" method="post">
@@ -33,8 +36,8 @@
 				</li>
 	                
 				<li>
-				   <span class="dis">密码：</span><input class="input" type="password" name="userPassword" id="userPassword" maxlength="24" tabindex="1" autocomplete="off">  
-				   <a href="#" id="pawHide" class="blue">忘记密码</a>
+				   <span class="dis">密码：</span><input class="input" type="password" name="userPassword" id="userPassword" maxlength="50" tabindex="1" autocomplete="off">  
+				   <a href="${ctx }/toforgetpassword" id="pawHide" class="blue">忘记密码</a>
 				</li>
 				<li>
 				  <span class="dis">验证码：</span><input type="text"  id="jpgVerify" style="width:166px;" class="input" name="jpgVerify" data-msg="验证码" maxlength="4" tabindex="1" autocomplete="off">
@@ -61,15 +64,5 @@ function flushCode() {
     var time = new Date();
     document.getElementById("scode").src = "<%=request.getContextPath()%>/getCode?time="+time;
 		}	
-//提交登录
-$("#loginSubmit").click(function () {
-	// md5 对密码进行加密24次
-	var password = $("#userPassword").val();
-	for (var i = 0; i < 24; i++) {
-		password = hex_md5(password);
-	}
-	$("#userPassword").val(password);
-	$("#LonginForm").submit();
-});
 </script>
 </html>
