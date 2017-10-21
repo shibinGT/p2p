@@ -1,3 +1,8 @@
+#index{
+	float:left;
+	margin-left:20px;
+	width:75%;
+}
 #investInfo{
 	border:1px red solid;
 }
@@ -11,3 +16,25 @@
 .borrow-list .title a:hover{text-decoration:underline;}
 .borrow-list .f24{display:inline-block;padding:0 5px;}
 .show-bar{ line-height:50px;}
+
+#cover{
+	width:600px;
+	height:200px;
+	position: relative;
+	background-color: white; 
+	float:left;
+	top:-200px;
+	z-index: 5;
+}
+
+/* 项目 */
+.mod-borrow{background:#FFF;border:1px solid #ebebeb;}
+.mod-borrow .hd{height:60px;line-height:60px;position:relative;}
+.mod-borrow .hd h2{font-size:20px;width:210px;height:60px;background:url(/p2p-manager/static/assets/images/home_sprite.png);float:left;margin-left:-10px;line-height:50px;color:#FFF;text-indent:75px;}
+.mod-borrow .hd .icon{background:url(/p2p-manager/static/assets/images/home_sprite.png);position:absolute;}
+.mod-borrow .hd .icon-ssbx{width:38px;height:30px;background-position:-410px 0;left:20px;top:10px;}
+.mod-borrow .bd .des{height:33px;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8;line-height:33px;padding:0 30px;background:#FFF;position:relative;z-index:2;font-size:14px;color:#999;}
+.btn-gray{
+	background:#859ab4;
+	margin-right:20px;
+}

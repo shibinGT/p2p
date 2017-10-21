@@ -5,7 +5,15 @@
 	background: #fff
 }
 /* 项目列表部分 */
-div,td,a{color:#333;text-decoration:none} a img,iframe{border:0}
+div, td, a {
+	color: #333;
+	text-decoration: none
+}
+
+a img, iframe {
+	border: 0
+}
+
 .ipubs span {
 	width: 28%;
 	padding-left: 0;
@@ -14,9 +22,11 @@ div,td,a{color:#333;text-decoration:none} a img,iframe{border:0}
 	color: #777;
 	text-align: center
 }
+
 .ipubs span.o3, .ipubs span.o4 {
 	width: 15%
 }
+
 .ipubs strong {
 	color: #f60;
 	display: inline;
@@ -25,4 +35,16 @@ div,td,a{color:#333;text-decoration:none} a img,iframe{border:0}
 	margin: 0 5px;
 	position: relative;
 	top: 2px
+}
+
+.fn-left {
+	float: left;
+}
+
+.fn-left, .fn-right {
+	display: inline;
+}
+
+.fn-right {
+	float: right;
 }

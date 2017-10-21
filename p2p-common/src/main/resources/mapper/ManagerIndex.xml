@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qhcs.ssm.dao.ManagerIndexMapper" >
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	<!-- public Map<Date, Integer> getRegNumByDate(); -->
+	
+
+
+	<select id="getRegNumByDate"  resultType="com.qhcs.ssm.entity.RegisterCount">
+		select user_registtime regDate,count(1) number from t_user group by date(user_registtime)
+	</select>
+</mapper>
+	
