@@ -1,0 +1,50 @@
+.ipubs {
+	width: 1150px;
+	margin: 20px auto 0;
+	padding: 10px 20px;
+	background: #fff
+}
+/* 项目列表部分 */
+div, td, a {
+	color: #333;
+	text-decoration: none
+}
+
+a img, iframe {
+	border: 0
+}
+
+.ipubs span {
+	width: 28%;
+	padding-left: 0;
+	padding-right: 0;
+	display: inline-block;
+	color: #777;
+	text-align: center
+}
+
+.ipubs span.o3, .ipubs span.o4 {
+	width: 15%
+}
+
+.ipubs strong {
+	color: #f60;
+	display: inline;
+	font-size: 22px;
+	font-weight: 400;
+	margin: 0 5px;
+	position: relative;
+	top: 2px
+}
+
+.fn-left {
+	float: left;
+}
+
+.fn-left, .fn-right {
+	display: inline;
+}
+
+.fn-right {
+	float: right;
+}

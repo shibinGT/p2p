@@ -55,7 +55,7 @@
                         <li>
                             <a href="${ctx }/main">
                                 <i class="icon-dashboard"></i>
-                                <span class="menu-text"> 控制台 </span>
+                                <span class="menu-text"> 首 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页 </span>
                             </a>
                         </li>
 
