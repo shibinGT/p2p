@@ -13,7 +13,7 @@ public class Test {
 		// service.updateAccountByUserId(56.2, 1);
 		BankCard bankCard = new BankCard();
 		bankCard.setBankCardNumber("54500004");
-		System.out.println("=========" + service.addBankCard(bankCard, 5000.0, 1));
+		System.out.println("=========" + service.addBankCard(bankCard, -5000.0, 11));
 		System.out.println(bankCard.getBankCardId());
 	}
 
