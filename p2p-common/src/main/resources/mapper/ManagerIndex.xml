@@ -13,7 +13,7 @@
 	    <id column="project_id" property="projectId"/>
 	    <result column="project_title" property="projectTitle" jdbcType="VARCHAR" />
 	    <result column="project_raise_money" property="projectRaiseMoney" jdbcType="DOUBLE" />
-	    <collection property="repayment" ofType="com.qhcs.ssm.entity.Repayment">
+	    <collection property="repayments" ofType="com.qhcs.ssm.entity.Repayment">
 	      <id column="repayment_id" property="repaymentId"/>
 	       <result column="investment_id" property="projectId"/>
 	       <result column="user_Id" property="userId"/>

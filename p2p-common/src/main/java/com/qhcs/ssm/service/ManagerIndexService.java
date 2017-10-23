@@ -66,7 +66,7 @@ public class ManagerIndexService {
 		// 近15天全部数据
 		boolean equal;
 		List<RegisterCount> allDays = new LinkedList<>();
-		for (int i = 1; i <= 30; i++) {
+		for (int i = 1; i <= 15; i++) {
 			equal = false;
 			for (RegisterCount register : registerCount) {
 				// 有注册数据则写为注册人数
@@ -75,21 +75,24 @@ public class ManagerIndexService {
 					allDays.add(register);
 					break;
 				}
+				// 没人注册的天数设置成0
 			}
-			// 没人注册的天数设置成0
 			if (!equal) {
 				allDays.add(new RegisterCount(dayTemp, 0));
 			}
+
 			// 减少一天
 			dayTemp = new Date(dayTemp.getTime() - 24 * 60 * 60 * 1000);
-
 		}
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		// 循环拿出字符串拼接
-		for (int i = allDays.size() - 1; i > 0; i--) {
+
+		for (int i = allDays.size() - 1; i >= 0; i--) {
 			jsonStr = jsonStr + '[' + '"' + formatter.format(allDays.get(i).getRegDate()) + '"' + ','
 					+ allDays.get(i).getNumber() + "],";
 		}
+		System.out.println("\n\n" + allDays.size()
+				+ "\n===============================@@@@@@@@@@@@@================\n\n" + jsonStr);
 		jsonStr = jsonStr.substring(0, jsonStr.length() - 1) + "]";
 		// 格式化字符串
 

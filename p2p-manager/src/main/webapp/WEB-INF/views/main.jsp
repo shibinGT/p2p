@@ -49,7 +49,7 @@
 					<ul>
 						<!-- 最多显示4条 -->
 						<c:forEach items="${projects }" var="project" begin="0" end="3">
-
+						<c:forEach items="${project.repayments }" var="repayment">
 							<li>
 								<div class="title">
 									<a href="infor.html" target="_blank"><i
@@ -61,14 +61,14 @@
 										<tr>
 											<td width="260">借款金额<span class="f24 c-333">${project.projectRaiseMoney }</span>元
 											</td>
-											<td width="165">利息<span class="f24 c-333">${project.repayment.getRepaymentInterest()}%
+											<td width="165">利息<span class="f24 c-333">${repayment.repaymentInterest}%
 											</span></td>
 											<td width="180" align="center">还款  日期<span id="days" class="f24 c-orange">
-											<c:if test="${project.getDiffDate()>=0 }">
-												剩余 ${project.getDiffDate()  }
+											<c:if test="${repayment.getDiffDate()>=0 }">
+												剩余 ${repayment.getDiffDate()  }
 											</c:if>
-											<c:if test="${project.getDiffDate()<0 }">
-												超期 ${-project.getDiffDate()  }
+											<c:if test="${repayment.getDiffDate()<0 }">
+												超期 ${- repayment.getDiffDate()  }
 											</c:if>
 											
 											</span>天
@@ -81,7 +81,7 @@
 								</table>
 							</li>
 						</c:forEach>
-
+						</c:forEach>
 					</ul>
 				</div>
 			</div>
@@ -144,7 +144,7 @@
 				
 				    title: [{
 				        left: 'center',
-				        text: '近两月注册人数走势图'
+				        text: '近半月注册人数走势图'
 				    }, {
 				        top: '55%',
 				        left: 'center',

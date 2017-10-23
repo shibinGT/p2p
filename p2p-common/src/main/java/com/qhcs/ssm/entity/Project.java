@@ -198,19 +198,4 @@ public class Project extends BaseEntity {
 		this.projectAuditorDate = projectAuditorDate;
 	}
 
-	/**
-	 * 
-	 * 计算当前日期时间和还款日期时间
-	 * 
-	 * @version 2017年10月21日下午6:15:19
-	 * @author lijing
-	 * @return
-	 */
-	public int getDiffDate() {
-		// new date - repayment.get()
-		Date today = new Date();
-		long diff = repayment.getRepaymentContractDate().getTime() - today.getTime();
-		int diff1 = (int) (diff / (1000 * 60 * 60 * 24));
-		return diff1;
-	}
 }

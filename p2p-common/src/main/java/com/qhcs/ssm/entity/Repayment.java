@@ -144,4 +144,19 @@ public class Repayment {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
+	/**
+	 * 
+	 * 计算还款日期与当前日期的天数
+	 * 
+	 * @version 2017年10月23日下午5:29:52
+	 * @author lijing
+	 * @return
+	 */
+	public int getDiffDate() {
+		Date today = new Date();
+		long diff = repaymentContractDate.getTime() - today.getTime();
+		int diff1 = (int) (diff / (1000 * 60 * 60 * 24));
+		return diff1;
+	}
 }
