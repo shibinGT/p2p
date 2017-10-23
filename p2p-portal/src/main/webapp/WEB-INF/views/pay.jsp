@@ -23,73 +23,16 @@
 <body>
     <!-- 页面头部 -->
     <jsp:include page="/top.jsp">
-        <jsp:param value="title" name="apply"/>
+        <jsp:param value="title" name="account"/>
     </jsp:include>
 <!--个人中心-->
 <div class="wrapper wbgcolor">
-            <div class="w1200 personal">
-                <div class="credit-ad"><img src="images/clist1.jpg" width="1000" height="80"></div>
-                
-                <div id="personal-left" class="personal-left">
-                    <ul>
-                        <li><span><a href="#"><i class="dot dot01"></i>账户总览</a></span></li>
-                        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="#">资金记录</a></span></li>
-                        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="#">投资记录</a></span></li>
-                        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="#">回款计划</a></span></li>
-                        <li><span><a href="#"><i class="dot dot02"></i>开通第三方</a>
-                            </span>
-                        </li>
-                        <li class="pleft-cur"><span><a href="#"><i class="dot dot3"></i>充值</a></span></li>
-                        <li><span><a href="#"><i class="dot dot04"></i>提现</a></span></li>
-                        <li style="position:relative;">
-                            <span>
-                                <a href="#">
-                                <i class="dot dot06"></i>
-                                我的红包
-                                 
-                                </a>
-                            </span>
-                        </li>
-                        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="#">兑换历史</a></span></li>
-                            <li><span><a href="#"><i class="dot dot07"></i>自动投标</a></span></li>
-                         
-                        
-                        <li style="position:relative;">
-                            <span>
-                                <a href="#"><i class="dot dot08"></i>系统信息
-                                     
-                                </a>
-                            </span>
-                        </li>
-                        <li><span><a href="#"><i class="dot dot09"></i>账户设置</a></span></li>
-                    </ul>
-                </div><label id="typeValue" style="display:none;">
-</label>
+     <!-- 个人消息列表 -->
+    <jsp:include page="/personnal-left.jsp">
+        <jsp:param value="pleft-cur" name="pay"/>
+    </jsp:include>
         <script>
-        $(function(){
-            $('.quick-tit').click(function(){
-              
-              $(this).addClass('pay-cur');
-              $(this).siblings().removeClass('pay-cur');
-              $('.quick-main').show();
-              $('.online-main').hide();
-              
-              $(".pay-tipcon").hide();
-              $(".pay-tipcon2").show();
-
-            })
-
-            $('.online-tit').click(function(){
-              
-              $(this).addClass('pay-cur');
-              $(this).siblings().removeClass('pay-cur');
-              $('.quick-main').hide();
-              $('.online-main').show();
-
-              $(".pay-tipcon2").hide();
-              $(".pay-tipcon").show();
-            })
-      });
+       
         //<![CDATA[
             function showSpan(op){
                 $("body").append("<div id='mask'></div>");
@@ -401,15 +344,15 @@
         <h3><i>充值</i></h3>
         <div class="quick-pay-wrap">
           <h4> <span class="quick-tit pay-cur"><em>快捷支付</em></span> <span class="online-tit"><em>网银充值</em></span> </h4>
-          <form id="form" name="form" method="post" action="" >
+          <form id="form" name="form" method="post" action="${ctx }/pay" >
             <div class="quick-main">
               <div class="fl quick-info">
                 <div class="info-1"> <span class="info-tit">充值金额</span> <span class="info1-input">
-                  <input id="form:actualMoney1" type="text" name="" class="pay-money-txt" maxlength="10" >
+                  <input id="form:actualMoney1" type="text" name="money" class="pay-money-txt" maxlength="10" >
                   <em>元</em> </span> <span class="quick-error"> </span> </div>
                 <div class="info-tips">亿人宝提醒您：充值金额超过50000元时，请切换到网银充值</div>
                 <div class="info-2"> <span class="info-tit">银行卡号</span> <span class="info2-input">
-                  <input id="form:bankCardNo" type="text" name="form:bankCardNo" class="tx-txt">
+                  <input id="form:bankCardNo" type="text" name="bankCardNumber" class="tx-txt">
                   <em class="info2-bank" style="display: none;">
                   <label id="form:defaultBankName" style="font-size:16px;"> </label>
                   </em> </span> <span class="quick-error3" id="bankCardError"></span> </div>
@@ -436,21 +379,21 @@
                 <h6>请选择充值银行</h6>
                 <span id="showpay" style="display:none;">icbc</span>
                 <ul id="paysSpan" style="height:150px;">
-                  <li><img src="images/bank_002.gif" property1="icbc" class="on"><em></em><i></i></li>
-                  <li><img src="images/bank_006.gif" property1="abc"><em></em></li>
-                  <li><img src="images/bank_001.gif" property1="boc"><em></em></li>
-                  <li><img src="images/bank_004.gif" property1="ccb"><em></em></li>
-                  <li><img src="images/bank_008.gif" property1="hxb"><em></em></li>
-                  <li><img src="images/bank_007.gif" property1="comm"><em></em></li>
-                  <li><img src="images/bank_003.gif" property1="cmb"><em></em></li>
-                  <li><img src="images/bank_011.gif" property1="ceb"><em></em></li>
-                  <li><img src="images/bank_015.gif" property1="cncb"><em></em></li>
-                  <li><img src="images/bank_010.gif" property1="cmsb"><em></em></li>
-                  <li><img src="images/bank_012.gif" property1="cgb"><em></em></li>
-                  <li><img src="images/bank_bos.gif" property1="shb"><em></em></li>
-                  <li><img src="images/bccb.gif" property1="bjb"><em></em></li>
-                  <li><img src="images/bank-nsyh.gif" property1="rcb"><em></em></li>
-                  <li><img src="images/bank-xyyh.gif" property1="cib"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_002.gif" property1="icbc" class="on"><em></em><i></i></li>
+                  <li><img src="${ctx}/static/images/bank_006.gif" property1="abc"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_001.gif" property1="boc"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_004.gif" property1="ccb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_008.gif" property1="hxb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_007.gif" property1="comm"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_003.gif" property1="cmb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_011.gif" property1="ceb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_015.gif" property1="cncb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_010.gif" property1="cmsb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_012.gif" property1="cgb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank_bos.gif" property1="shb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bccb.gif" property1="bjb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank-nsyh.gif" property1="rcb"><em></em></li>
+                  <li><img src="${ctx}/static/images/bank-xyyh.gif" property1="cib"><em></em></li>
                 </ul>
                 <span class="pay-other"><span class="paytxt">选择其他银行卡</span><i class="paydown"></i></span> </div>
               <div class="pay-bankstate"> <span class="bankstate-head"><i class="fl">请关注您的充值金额是否超限：</i><i class="fr" id="show-pay-hotLine">工商银行客服热线：95588</i></span>

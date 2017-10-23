@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qhcs.ssm.dao.BankCardMapper">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+	
+<!--         添加银行卡号返回ID -->	
+	<insert id="addBankCard" useGeneratedKeys="true" keyProperty="bankCardId">
+       INSERT INTO t_bank_card 
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bankCardNumber != null and bankCardNumber !=''">
+                bank_card_number,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bankCardNumber != null and bankCardNumber !=''">
+                #{bankCardNumber},
+            </if>
+        </trim>
+    </insert>
+    
+<!--     添加银行卡id和用户id -->
+    <insert id="addUserBankId" >
+       INSERT INTO t_sys_user_bank
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId !=''">
+                bank_card_id,
+            </if>
+            <if test="BankId != null and BankId !=''">
+                account_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId !=''">
+                #{userId},
+            </if>
+            <if test="BankId != null and BankId !=''">
+                #{BankId},
+            </if>
+        </trim>
+    </insert>
+</mapper>

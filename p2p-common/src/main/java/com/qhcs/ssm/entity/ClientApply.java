@@ -2,6 +2,8 @@ package com.qhcs.ssm.entity;
 
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -17,18 +19,20 @@ public class ClientApply extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	// 申请表id
 	private Integer applyId;
+	// 申请人id
+	private Integer userId;
 	// 申请人真实名称
 	@NotEmpty
 	private String applyName;
 	// 申请人电话
-	// @NotEmpty
-	// @Pattern(regexp = "正则")
+	@NotEmpty
+	@Pattern(regexp = "^1[0-9]\\d{9}$")
 	private String applyCall;
 	// 申请金额
-	// @NumberFormat(pattern = "#,###.##")
+	// @NotEmpty
 	private Double applyMoney;
 	// 申请期限（单位为天）
-	// @Pattern(regexp = "正则表达式,flag=标志的模式")
+	// @Pattern(regexp = "^[1-9]\\d*$")
 	private Integer applyDeadline;
 	// 申请人所在地区
 	@NotEmpty
@@ -48,6 +52,14 @@ public class ClientApply extends BaseEntity {
 
 	public void setApplyId(Integer applyId) {
 		this.applyId = applyId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getApplyName() {

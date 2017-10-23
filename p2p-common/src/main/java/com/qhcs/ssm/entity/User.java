@@ -31,7 +31,7 @@ public class User extends BaseEntity {
 	//手机号
 	private String userPhone;
 	//用户状态
-	private String userState;
+	private String userStatus;
 	public Integer getUserId() {
 		return userId;
 	}
@@ -80,14 +80,14 @@ public class User extends BaseEntity {
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
-	public String getUserState() {
-		return userState;
+	public String getUserStatus() {
+		return userStatus;
 	}
-	public void setUserState(String userState) {
-		this.userState = userState;
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 	public User(Integer userId, String userName, String userPassword, String userReferrer, String userRealName,
-			String userIdCard, String userEmail, String userPhone, String userState) {
+			String userIdCard, String userEmail, String userPhone, String userStatus) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -97,7 +97,7 @@ public class User extends BaseEntity {
 		this.userIdCard = userIdCard;
 		this.userEmail = userEmail;
 		this.userPhone = userPhone;
-		this.userState = userState;
+		this.userStatus = userStatus;
 	}
 	public User() {
 		super();
@@ -106,7 +106,7 @@ public class User extends BaseEntity {
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword
 				+ ", userReferrer=" + userReferrer + ", userRealName=" + userRealName + ", userIdCard=" + userIdCard
-				+ ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userState=" + userState + "]";
+				+ ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userStatus=" + userStatus + "]";
 	}
 	
 

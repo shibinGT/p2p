@@ -3,7 +3,6 @@
 //    	姓名
     	$("#applyName").blur(function(){
     		applyName();
-    		alert(applyName());
     		submit();
     	});
     
@@ -117,13 +116,13 @@ function applyCall(){
      } 
     if (trimCall.length != 11) {
         $("#call").text("");
-        $("#call").append("<span style=color:#ff7800>手机号格式不正确,手机号1开头</span>");
+        $("#call").append("<span style=color:#ff7800>请输入以1开头11位数字的手机号</span>");
         flag = 1;
         return false;
     }
     else if (!regPartton.test(trimCall)) {
         $("#call").text("");
-        $("#call").append("<span style=color:#ff7800>手机号格式不正确,以1开头</span>");
+        $("#call").append("<span style=color:#ff7800>请输入以1开头11位数字的手机号</span>");
         flag = 1;
         return false;
     } else {
@@ -146,7 +145,7 @@ function applyMoney() {
      } 
      if (!regPartton.test(trimMoney)) {
         $("#money").text("");
-        $("#money").append("<span style=color:#ff7800>输入金额不正确，请输入首位不为0的数字</span>");
+        $("#money").append("<span style=color:#ff7800>输入金额不正确，请输入首位大于0的数字</span>");
         flag = 1;
         return false;
     } else {

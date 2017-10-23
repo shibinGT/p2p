@@ -5,6 +5,7 @@ $().ready(function() {
 	    var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;  
 	    return this.optional(element) || (length == 11 && mobile.test(value));  
 	}, "请正确填写您的手机号码"); 
+	
   $("#registerForm").validate({
 	  //验证方式，鼠标离开就验证
 	  onfocusout: function(element) { $(element).valid(); }, 
@@ -61,16 +62,18 @@ $().ready(function() {
       },
       phonVerify:{ //手机验证码
     	   required: true,
-           remote:{
-           	 url: "checkPhonVerify",     //后台处理程序
-        	    type: "post",               //数据发送方式
-        	    dataType: "json",           //接受数据格式   
-        	    data: {                     //要传递的数据
-        	    	phonVerify: function() {
-        	            return $("#phonVerify").val();
-        	        }
-        	    }
-           }
+      },
+      userReferrer:{
+    	  remote:{
+         	 url: "checkUserReferrer",     //后台处理程序
+      	    type: "post",               //数据发送方式
+      	    dataType: "json",           //接受数据格式   
+      	    data: {                     //要传递的数据
+      	    	userReferrer: function() {
+      	            return $("#userReferrer").val();
+      	        }
+      	    }
+         }
       },
       protocol:"required" //协议
     },
@@ -79,6 +82,9 @@ $().ready(function() {
         required: "请输入用户名",
         minlength: "用户名必需由两个字母组成",
         remote:"用户名已存在"
+      },
+      userReferrer:{
+    	remote:"推荐人不存在"  
       },
       userPassword: {
         required: "请输入密码",
@@ -100,15 +106,14 @@ $().ready(function() {
           }, 
         phonVerify: {
             required: "请输入验证码",
-            remote:"验证码不正确"
           }, 
           protocol:"请同意协议"
     }
 })
 
+	
 //提交注册
-$('#registerSubmit').click(function() {
-		if($("#registerForm").valid()){
+$('#registerSubmit').click(function() {		
 	// md5 对密码进行加密24次
 		var password = $("#userPassword").val();
 		for (var i = 0; i < 24; i++) {
@@ -116,8 +121,6 @@ $('#registerSubmit').click(function() {
 		}
 		$("#userPassword").val(password);
 		$("#repeatPassword").val(password);			
-		$('#registerForm').submit();
-		}
+		$('#registerForm').submit();		
 });
-
 });

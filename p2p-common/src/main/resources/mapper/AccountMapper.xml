@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qhcs.ssm.dao.AccountMapper">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+	
+	<!--通过用户ID查找账户信息  -->
+	<select id="queryAccountByUserId" resultType="com.qhcs.ssm.entity.Account">
+		select*from t_account where user_id=#{userId};
+	</select>
+	
+	   <!-- 根据用户ID修改可用资金 -->
+    <update id="updateAccountByUserId" >
+        UPDATE t_account  
+        <set>
+            <if test="updateMoney != null and updateMoney !=''">
+                   account_available_capital=account_available_capital+#{updateMoney} 
+            </if>
+        </set>
+        <if test="userId != null and userId !=''">
+            where user_id=#{userId}
+        </if>
+    </update>
+	
+</mapper>

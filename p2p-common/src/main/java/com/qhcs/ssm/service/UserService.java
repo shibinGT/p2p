@@ -66,5 +66,28 @@ public class UserService {
 	public User queryUserByPhone(String userPhone){
 		return userMapper.queryUserByPhone(userPhone);
 	}
-	
+	/**
+	 * 
+	 *TODO:改变用户状态
+	 *@version:2017年10月20日
+	 *@aothor：shibin
+	 * @param userStatus
+	 * @param userName
+	 * @return
+	 */
+		public boolean updateUserStatus(Integer userStatus,String userName){
+			return userMapper.updateUserStatus(userStatus, userName);
+		}
+		/**
+		 * 
+		 *TODO:修改密码
+		 *@version:2017年10月21日
+		 *@aothor：shibin
+		 * @param userPassword
+		 * @param userName
+		 * @return
+		 */
+		public boolean updateUserPassword(String userPassword,String userName){
+			return userMapper.updateUserPassword(userPassword, userName);
+	}
 }
