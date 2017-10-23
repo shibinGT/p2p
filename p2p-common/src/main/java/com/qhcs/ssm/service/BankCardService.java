@@ -40,7 +40,7 @@ public class BankCardService {
 
 	/**
 	 * 
-	 * 添加银行卡号和改变用户可用余额
+	 * 添加银行卡号和改变用户可用余额和添加交易记录
 	 * 
 	 * @version 2017年10月21日上午11:00:45
 	 * @author lizongcai
@@ -64,11 +64,34 @@ public class BankCardService {
 		Date dateTime = new Date();
 		transactionRecord.setUserId(userId);
 		transactionRecord.setTransactionRecordDate(dateTime);
-		if (updateMoney > 0) {
-			transactionRecord.setTransactionRecordType("充值");
-		} else {
-			transactionRecord.setTransactionRecordType("提现");
-		}
+		transactionRecord.setTransactionRecordType("充值");
+		transactionRecord.setTransactionRecordAmount(updateMoney);
+		transactionRecord.setTransactionRecordAvailableCapital(account.getAccountAvailableCapital());
+		flag = transactionRecordMapper.addSelectiveTransactionRecord(transactionRecord);
+		return flag;
+	}
+
+	/**
+	 * 
+	 * 改变用户可用余额和添加交易记录
+	 * 
+	 * @version 2017年10月21日上午11:00:45
+	 * @author lizongcai
+	 * @param cardNumber
+	 * @return
+	 */
+	public boolean updateAccountAddTransaction(Double updateMoney, Integer userId) {
+		boolean flag = false;
+		// 根据用户id修改用户可用余额
+		flag = accountMapper.updateAccountByUserId(updateMoney, userId);
+		// 查询可用金额
+		Account account = accountMapper.queryAccountByUserId(userId);
+		// 往交易记录表添加数据
+		TransactionRecord transactionRecord = new TransactionRecord();
+		Date dateTime = new Date();
+		transactionRecord.setUserId(userId);
+		transactionRecord.setTransactionRecordDate(dateTime);
+		transactionRecord.setTransactionRecordType("提现");
 		transactionRecord.setTransactionRecordAmount(updateMoney);
 		transactionRecord.setTransactionRecordAvailableCapital(account.getAccountAvailableCapital());
 		flag = transactionRecordMapper.addSelectiveTransactionRecord(transactionRecord);

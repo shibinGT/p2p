@@ -27,24 +27,10 @@
     </jsp:include>
 <!--个人中心-->
 <div class="wrapper wbgcolor">
-  <div class="w1200 personal">
-    <div class="credit-ad"><img src="images/clist1.jpg" width="1200" height="96"></div>
-    <div id="personal-left" class="personal-left">
-      <ul>
-        <li class="pleft-cur"><span><a href="个人中心首页.html"><i class="dot dot1"></i>账户总览</a></span></li>
-        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="个人中心-资金记录 .html">资金记录</a></span></li>
-        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="个人中心-投资记录.html">投资记录</a></span></li>
-        <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="个人中心-回款计划.html">回款计划</a></span></li>
-        <li class=""><span><a href="个人中心-开通第三方1.html"><i class="dot dot02"></i>开通第三方</a> </span> </li>
-        <li><span><a href="个人中心-充值1.html"><i class="dot dot03"></i>充值</a></span></li>
-        <li class=""><span><a href="个人中心-提现1.html"><i class="dot dot04"></i>提现</a></span></li>
-        <li style="position:relative;" class=""> <span> <a href="个人中心-我的红包.html"> <i class="dot dot06"></i> 我的红包 </a> </span> </li>
-        <li class=""><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="个人中心-兑换历史.html">兑换历史</a></span></li>
-        <li style="position:relative;"> <span> <a href="个人中心-系统消息.html"><i class="dot dot08"></i>系统信息 </a> </span> </li>
-        <li><span><a href="个人中心-账户设置.html"><i class="dot dot09"></i>账户设置</a></span></li>
-      </ul>
-    </div>
-    <label id="typeValue" style="display:none;"> </label>
+      <!-- 个人消息列表 -->
+    <jsp:include page="/information-list.jsp">
+        <jsp:param value="pleft-cur" name="drawings"/>
+    </jsp:include>
     <script>
         //<![CDATA[
             function showSpan(op){
@@ -80,7 +66,7 @@
                 var numberFlag=isNaN(actualMoney);
                 if(numberFlag==true)
                 {
-                    $(actualMessage).text("提现金额必须大于2.00 元，单笔不超过50 万");
+                    $(actualMessage).text("提现金额必须为数字");
                     $(actualMessage).show();
                     return false;
                 }
@@ -114,7 +100,7 @@
                 {
                     $(actualMessage).hide();
                 }
-                var balance=Number("0.0");
+                var balance=Number($("#form\\:blance")[0].innerHTML);
                 //提现金额小于余额 
                 var legalFlag=(actualMoney-balance).toFixed(2)<=0;
                 if(!legalFlag)
@@ -146,11 +132,31 @@
                 }
             }
             //]]>
+        
+          //提现时计算提款费用
+         function num_checked(){ 
+        	 var money = $("#form\\:actualMoney").val();
+             var cost = money*0.05;
+             var cashFine = money-cost;
+             var flag = money - 2;
+             if(flag > 2 && cost < 2){
+            	 $("#fee").text(2);  
+                 $("#cashFine").text(flag);  
+             }else{
+                 $("#fee").text("最低2");
+                 $("#cashFine").text(0);  
+             }
+             
+             if(cost > 2 ){
+                 $("#fee").text(cost);  
+                 $("#cashFine").text(cashFine);  
+             }
+          }
         </script>
     <div class="personal-main">
       <div class="personal-deposit">
         <h3><i>提现</i></h3>
-        <form id="form" name="form" method="post" action="/user/withdraw" enctype="application/x-www-form-urlencoded" target="_blank">
+        <form id="form" name="form" method="post" action="${ctx}/drawings" enctype="application/x-www-form-urlencoded" >
           <input type="hidden" name="form" value="form">
           <div class="deposit-form" style="margin-top:0px;border-top:0px none;">
             <h6>填写提现金额</h6>
@@ -159,13 +165,13 @@
                 <label id="form:blance"> ${requestScope.usableMoney} </label>
                 </i>元 </span> </li>
               <li> <span class="deposit-formleft">提现金额</span> <span class="deposit-formright">
-                <input id="form:actualMoney" type="text" name="cashNumber" class="deposite-txt" maxlength="10">
+                <input id="form:actualMoney" onkeyup="num_checked()" type="text" name="cashNumber" class="deposite-txt" maxlength="10">
                 元 </span> <span id="actualMoneyErrorDiv"><span id="actualMoney_message" style="display:none" class="error"></span></span> </li>
               <li> <span class="deposit-formleft">提现费用</span> <em id="txfy" class="markicon fl"></em> <span class="deposit-formright deposit-formright1"> <i>
-                <label id="form:fee"> 0.00</label>
+                <label id="fee"> 最低2</label>
                 </i>元 </span> <span class="txarrow-show">提现金额的0.1%，最低不低于2元，最高100元封顶</span><span class="txicon-show"></span> </li>
               <li><span class="deposit-formleft">实际到账金额</span> <em id="dzje" class="markicon fl"></em> <span class="deposit-formright deposit-formright1"> <i>
-                <label id="form:cashFine"> 0.00</label>
+                <label id="cashFine"> 0.00</label>
                 </i> 元</span> <span class="dzarrow-show">提现金额 - 提现费用</span><span class="dzicon-show"></span> </li>
               <li>
                 <input type="submit" name="form:j_idt78" value="提现" class="btn-depositok" onclick="return checkActualMoney()">

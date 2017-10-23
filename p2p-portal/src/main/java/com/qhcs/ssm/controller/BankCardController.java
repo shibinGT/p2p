@@ -20,6 +20,19 @@ public class BankCardController {
 
 	/**
 	 * 
+	 * 跳转到安全保障页面
+	 * 
+	 * @version 2017年10月22日下午1:08:31
+	 * @author lizongcai
+	 * @return
+	 */
+	@RequestMapping("/toSafety")
+	public String toSafety() {
+		return "safety";
+	}
+
+	/**
+	 * 
 	 * 跳转到充值页面
 	 * 
 	 * @version 2017年10月22日下午1:08:31
@@ -89,17 +102,17 @@ public class BankCardController {
 	 * @return
 	 */
 	@RequestMapping("/drawings")
-	public String drawing(BankCard bankCard, @Param("money") String money, HttpSession session) {
+	public String drawing(@Param("cashNumber") String cashNumber, HttpSession session) {
 		// 获取登录用户
 		User user = (User) session.getAttribute("loginUser");
 		// 取出用户id
 		Integer userId = user.getUserId();
 		// 充值金额转换为double
-		Double updateMoney = Double.parseDouble("-" + money);
-		// 修改用户可用余额
-		boolean result = bankCardService.addBankCard(bankCard, updateMoney, userId);
+		Double updateMoney = Double.parseDouble("-" + cashNumber);
+		// 修改用户可用余额和添加交易记录
+		boolean result = bankCardService.updateAccountAddTransaction(updateMoney, userId);
 		// 把充值结果放在session
 		session.setAttribute("result", result);
-		return "redirect:/drawings";
+		return "redirect:/toDrawings";
 	}
 }
