@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
@@ -74,7 +74,6 @@
                     <li class="on"><a href="${ctx}/index.jsp" class="${param.index }">首页</a></li>
                     <li><a href="${ctx}/investment/projectList" class="${param.investment}">我要投资</a></li>
                     <li><a href="${ctx }/client/toApply" class="${param.apply }">我要借款</a></li>
-                    <li><a href="帮助中心.html" class="${param.index }">安全保障</a></li>
                     <li class="top-nav-safe"><a href="${ctx}/user/userIndex" class="${param.index }">我的账户</a></li>
                     <li><a href="公司简介.html" class="${param.index }">关于我们</a></li>
                     <li><a href="${ctx}/toSafety" class="${param.safety }">安全保障</a></li>
