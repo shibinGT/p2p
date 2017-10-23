@@ -59,7 +59,7 @@
 						class="input input1  _phonVerify" data-_id="phonVerify"
 						tabindex="1"> </li>
 					<li><span class="dis">推 荐 人:</span> <input type="text"
-						name="userReferrer" class="input input1 _invist"> <span
+						name="userReferrer" id="userReferrer" class="input input1 _invist"> <span
 						class="_invist_msg">请填写推荐人账户名，如无推荐人请留空</span></li>
 					<li class="agree"><input name="protocol" id="protocol"
 						type="checkbox" value="yes" checked="checked"> 我同意《 <a

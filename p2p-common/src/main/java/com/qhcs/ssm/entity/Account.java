@@ -5,8 +5,13 @@ package com.qhcs.ssm.entity;
  * @date 2017年10月20日
  * @desc 账户实体类
  */
-public class Account extends BaseEntity{
 
+public class Account extends BaseEntity {
+
+	/**
+	 * 序列号
+	 */
+	private static final long serialVersionUID = 1L;
 	// 用户ID
 	private Integer UserId;
 	// 冻结资金

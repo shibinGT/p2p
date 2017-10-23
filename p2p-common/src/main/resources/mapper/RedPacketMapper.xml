@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qhcs.ssm.dao.RedPacketMapper" >
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	
+     <!-- public boolean addNomalUser(User user) 添加红包-->
+     
+     <insert id="addRedPacket" >
+        insert into t_red_packet(red_packet_manage_id,user_id,red_packet_get_date,red_packet_status,red_packet_exchange_code) 
+        values (#{redPacketManageId},#{userId},#{redPacketGetDate},#{redPacketStatus},#{redPacketExchangeCode})
+     </insert>
+  
+</mapper>

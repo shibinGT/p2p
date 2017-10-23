@@ -7,6 +7,7 @@
 	String ctx=request.getContextPath();
 	session.setAttribute("ctx", ctx);
 %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -40,14 +41,25 @@
                     <li><a href="index.html" class="app">返回首页</a></li>
                     <li>
                         <div class="">
-                            <a href="register.html" class="c-orange" title="免费注册">免费注册</a>
+                            <a href="${ctx }/toregister" class="c-orange" title="免费注册">免费注册</a>
+                            
                         </div>
                     </li>
-                    <li>
-                        <div class="">
-                            <a href="login.html" class="js-login" title="登录">登录</a>
-                        </div>
+                    <c:if test="${empty loginUser.userName}">
+                    <li>                                                  
+                          	<div class="">
+                           	 	<a href="${ctx }/tologin" class="js-login" title="登录">登录</a>                           
+                     		   </div>                     
                     </li>
+                    </c:if>
+                    <c:if test="${not empty loginUser.userName}">
+                    <li>                                                  
+                          	<div class="">
+                          	欢迎你 ${loginUser.userName}
+                           	 	<button id="logoutbutton" onclick="location.href='${ctx }/logout'">安全退出</button>                         
+                     		   </div>                     
+                    </li>
+                    </c:if>
                 </ul>
             </div>
         </div>
@@ -65,9 +77,13 @@
                     <li><a href="帮助中心.html" class="${param.index }">安全保障</a></li>
                     <li class="top-nav-safe"><a href="${ctx}/user/userIndex" class="${param.index }">我的账户</a></li>
                     <li><a href="公司简介.html" class="${param.index }">关于我们</a></li>
+                    <li><a href="${ctx}/toSafety" class="${param.safety }">安全保障</a></li>
+                    <li class="top-nav-safe"><a href="${ctx}/toPay" class="${param.account }">我的账户</a></li>
+                    <li><a href="公司简介.html" class="${param.index0 }">关于我们</a></li>
                 </ul>
             </div>
         </div>
     </header>
 </body>
+
 </html>

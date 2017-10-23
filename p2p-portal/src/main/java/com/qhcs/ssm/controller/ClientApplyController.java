@@ -61,7 +61,7 @@ public class ClientApplyController {
 	@RequestMapping("/apply")
 	public String Apply(@Valid ClientApply clientApply, BindingResult bindingResult, Model model, HttpSession session) {
 		// 判断申请表不为空且错误为0
-		if (clientApply == null && bindingResult.getErrorCount() == -1) {
+		if (clientApply == null && bindingResult.getErrorCount() > 0) {
 			// 返回申请页面
 			return "redirect: /client/toApply";
 		}

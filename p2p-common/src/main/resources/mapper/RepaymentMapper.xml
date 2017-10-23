@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qhcs.ssm.dao.RepaymentMapper">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+	
+	<!-- queryRepaymentsByProjectId(Integer projectId) 根据项目id从还款表中查询对应的还款信息集合-->
+	<select id="queryRepaymentsByProjectId" resultType="com.qhcs.ssm.entity.Repayment">
+	   select * from t_repayment where project_id=#{projectId}
+	</select>
+	
+</mapper>

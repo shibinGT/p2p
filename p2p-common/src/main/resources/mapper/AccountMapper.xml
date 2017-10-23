@@ -9,4 +9,18 @@
 	<select id="queryAccountByUserId" resultType="com.qhcs.ssm.entity.Account">
 		select*from t_account where user_id=#{userId};
 	</select>
+	
+	   <!-- 根据用户ID修改可用资金 -->
+    <update id="updateAccountByUserId" >
+        UPDATE t_account  
+        <set>
+            <if test="updateMoney != null and updateMoney !=''">
+                   account_available_capital=account_available_capital+#{updateMoney} 
+            </if>
+        </set>
+        <if test="userId != null and userId !=''">
+            where user_id=#{userId}
+        </if>
+    </update>
+	
 </mapper>
