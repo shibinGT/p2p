@@ -28,7 +28,7 @@
 <!--个人中心-->
 <div class="wrapper wbgcolor">
       <!-- 个人消息列表 -->
-    <jsp:include page="/information-list.jsp">
+    <jsp:include page="/personnal-left.jsp">
         <jsp:param value="pleft-cur" name="drawings"/>
     </jsp:include>
     <script>

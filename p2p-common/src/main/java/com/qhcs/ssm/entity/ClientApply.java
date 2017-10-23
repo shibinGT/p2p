@@ -19,6 +19,8 @@ public class ClientApply extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	// 申请表id
 	private Integer applyId;
+	// 申请人id
+	private Integer userId;
 	// 申请人真实名称
 	@NotEmpty
 	private String applyName;
@@ -50,6 +52,14 @@ public class ClientApply extends BaseEntity {
 
 	public void setApplyId(Integer applyId) {
 		this.applyId = applyId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getApplyName() {

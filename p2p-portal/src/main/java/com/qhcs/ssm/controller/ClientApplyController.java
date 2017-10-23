@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qhcs.ssm.entity.ClientApply;
+import com.qhcs.ssm.entity.User;
 import com.qhcs.ssm.service.ClientApplyService;
 
 @Controller
@@ -65,8 +66,14 @@ public class ClientApplyController {
 			// 返回申请页面
 			return "redirect: /client/toApply";
 		}
+		// 获取登录用户
+		User user = (User) session.getAttribute("loginUser");
+		// 取出用户id
+		Integer userId = user.getUserId();
+		// 获取当前时间
 		Date date = new Date();
 		clientApply.setApplyTime(date);
+		clientApply.setUserId(userId);
 		boolean result = clientApplyService.addClientApply(clientApply);
 		session.setAttribute("result", result);
 		return "redirect:/client/toApply";
