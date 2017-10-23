@@ -96,4 +96,8 @@
       </if>
     </where>
   </select>
+  
+  <select id="queryTransactionRecordByUserId" resultType="com.qhcs.ssm.entity.TransactionRecord">
+  		select * from t_transaction_record where user_id=#{userId}
+  </select>
 </mapper>

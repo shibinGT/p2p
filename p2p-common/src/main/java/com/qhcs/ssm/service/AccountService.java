@@ -28,7 +28,13 @@ public class AccountService extends BaseEntity{
 		return accountMapper.queryAccountFrozenCapital(userID);
 	}*/
 	
-	//根据用户ID查找账户信息
+	/**
+	 * 
+	 * @author liutianwen
+	 * @desc 根据用户ID查找账户信息
+	 * @parm
+	 * @return
+	 */
 		public Account queryAccountByUserId(int userID){
 			return accountMapper.queryAccountByUserId(userID);
 		}

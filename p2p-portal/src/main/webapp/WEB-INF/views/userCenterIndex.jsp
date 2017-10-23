@@ -22,39 +22,7 @@
 			<div class="credit-ad">
 				<img src="${ctx}/static/images/clist1.jpg" width="1200" height="96">
 			</div>
-			<div id="personal-left" class="personal-left">
-				<ul>
-					<li class="pleft-cur"><span><a href="个人中心首页.html"><i
-								class="dot dot1"></i>账户总览</a></span></li>
-					<li><span><a
-							style="font-size: 14px; text-align: center; width: 115px; padding-right: 35px;"
-							href="个人中心-资金记录 .html">资金记录</a></span></li>
-					<li><span><a
-							style="font-size: 14px; text-align: center; width: 115px; padding-right: 35px;"
-							href="个人中心-投资记录.html">投资记录</a></span></li>
-					<li><span><a
-							style="font-size: 14px; text-align: center; width: 115px; padding-right: 35px;"
-							href="个人中心-回款计划.html">回款计划</a></span></li>
-					<li class=""><span><a href="个人中心-开通第三方1.html"><i
-								class="dot dot02"></i>开通第三方</a> </span></li>
-					<li><span><a href="个人中心-充值1.html"><i
-								class="dot dot03"></i>充值</a></span></li>
-					<li class=""><span><a href="个人中心-提现1.html"><i
-								class="dot dot04"></i>提现</a></span></li>
-					<li style="position: relative;" class=""><span> <a
-							href="个人中心-我的红包.html"> <i class="dot dot06"></i> 我的红包
-						</a>
-					</span></li>
-					<li class=""><span><a
-							style="font-size: 14px; text-align: center; width: 115px; padding-right: 35px;"
-							href="个人中心-兑换历史.html">兑换历史</a></span></li>
-					<li style="position: relative;"><span> <a
-							href="个人中心-系统消息.html"><i class="dot dot08"></i>系统信息 </a>
-					</span></li>
-					<li><span><a href="个人中心-账户设置.html"><i
-								class="dot dot09"></i>账户设置</a></span></li>
-				</ul>
-			</div>
+			<%@include file="/personnal-left.jsp" %>
 			<div class="personal-main">
 				<link rel="stylesheet" type="text/css"
 					href="${ctx}/static/css/fileupload.less.css">
@@ -79,7 +47,7 @@
 </style>
 				<div class="pmain-profile">
 					<div class="pmain-welcome">
-						<span class="fl"><span id="outLogin">晚上好，</span>tg_gpdt0139
+						<span class="fl"><span id="outLogin">晚上好，</span>${loginUser.userName}
 							喝一杯下午茶，让心情放松一下~</span> <span class="fr">上次登录时间： 2015-09-11
 							14:05:07 </span>
 					</div>
@@ -125,7 +93,7 @@
 						</div>
 						<div class="user-info user-info1">
 							<ul>
-								<li>用户名<span>tg_gpdt0139</span></li>
+								<li>用户名<span>${loginUser.userName}</span></li> 
 								<li>安全级别<span><i class="safe-level"><i
 											class="onlevel" style="width: 40%;"></i></i></span> <a href="#">[低]</a></li>
 								<li>您还未开通第三方支付账户，请 <a class="pmain-log" href="#">立即开通</a>以确保您的正常使用和资金安全。
@@ -203,10 +171,6 @@
 									class="pmain-titletype">类型</span><span class="pmain-titlemoney">回款金额</span>
 							</div>
 							<ul style="float: left;">
-								<li><span class="pmain-titledate">2015-10-20</span><span
-									class="pmain-titleproject">宝马汽车借贷业务</span><span
-									class="pmain-titletype">债权转让</span><span
-									class="pmain-titlemoney">10.00</span></li>
 								<!--循环显示  -->
 								<%--  ${returnList} --%>
 								<c:forEach items="${returnList}" var="plan">
@@ -250,11 +214,14 @@
 									class="pmain-whb200">我的投资</span><span class="pmain-whb110">我的收益</span>
 							</div>
 							<ul style="float: left;">
-								<li><span class="pmain-titledate">2015-10-20</span><span
+							<c:forEach items="${InvestmentPage.list}" var="investment">
+								<li><span class="pmain-titledate"><fmt:formatDate value=
+              "${investment.investmentDate}" pattern="yyyy-MM-dd"/></span><span
 									class="pmain-w210">债权转让</span><span
-									class="pmain-w80 pmain-money">10.00</span><span
-									class="pmain-whb200 pmain-money">10.00</span><span
-									class="pmain-whb110">备注</span></li>
+									class="pmain-w80 pmain-money">${investment.investmentStatus}</span><span
+									class="pmain-whb200 pmain-money">${investment.investmentMoney}</span><span
+									class="pmain-whb110">${investment.investmentEarning }</span></li>
+							</c:forEach>	
 								<!--	<div style=" width:760px;height:200px;padding-top:100px; text-align:center;color:#d4d4d4; font-size:16px;">
 										    <img src="${ctx}/static/images/nondata.png" width="60" height="60"><br><br>
 										   暂无投资记录</div>-->
@@ -344,4 +311,9 @@
 		</div>
 	</div>
 </body>
+	<script type="text/javascript">
+		function safeLevel() {
+			var obj=document.getElementById("");
+		}
+	</script>
 </html>

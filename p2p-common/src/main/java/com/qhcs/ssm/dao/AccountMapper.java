@@ -9,6 +9,12 @@ import com.qhcs.ssm.entity.Account;
  */
 public interface AccountMapper {
 	
-	//根据用户ID查找账户信息
+	/**
+	 * 根据用户ID查找账户信息
+	 * @author liutianwen
+	 * @desc
+	 * @parm
+	 * @return
+	 */
 	public Account queryAccountByUserId(int userId);
 }
