@@ -56,8 +56,7 @@ public class InvestmentService extends BaseEntity{
 	 * @return：返回投资记录
 	 */
 	public PageInfo<Investment> queryInvestmentsByUserId(Integer userId){
-    PageHelper.startPage(getPageNum(),getPageSize());
-		
+        PageHelper.startPage(getPageNum(),getPageSize());
 		List<Investment> investments = investmentMapper.queryInvestmentsByUserId(userId);
 		//封装，把list封装成 PageInfo
 		PageInfo<Investment> page = new PageInfo<>(investments);

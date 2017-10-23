@@ -10,7 +10,7 @@
                 <div class="credit-ad"><img src="${ctx}/static/images/clist1.jpg" width="1200" height="80"></div>
                 <div id="personal-left" class="personal-left">
                     <ul>
-                        <li><span><a href="#"><i class="dot dot01"></i>账户总览</a></span></li>
+                        <li><span><a href="${ctx }/user/userIndex"><i class="dot dot01"></i>账户总览</a></span></li>
                         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="#">资金记录</a></span></li>
                         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="#">投资记录</a></span></li>
                         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="#">回款计划</a></span></li>
@@ -39,7 +39,8 @@
                                 </a>
                             </span>
                         </li>
-                        <li><span><a href="#"><i class="dot dot09"></i>账户设置</a></span></li>
+                        <li><span><a href="${ctx }/user/userSettings"><i
+								class="dot dot09"></i>账户设置</a></span></li>
                     </ul>
                 </div>
                 <label id="typeValue" style="display:none;"></label>

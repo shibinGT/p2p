@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%-- <%@ include file="base.jsp"%> --%>
+ <%@ include file="top.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,10 +48,7 @@
 </script>
 </head>
 <body>
-<!-- 页面头部 -->
-<jsp:include page="top.jsp">
-    <jsp:param value="title" name="index"/>
-</jsp:include>
+
 	<!--banner-->
 	<div class="flexslider">
 		<ul class="slides">

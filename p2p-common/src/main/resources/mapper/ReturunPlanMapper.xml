@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qhcs.ssm.dao.ReturnPlanMapper" >
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	<!-- 查询计划回款表 -->
+	<select id="queryReturnList" resultType="com.qhcs.ssm.entity.ReturnPlan">
+		select  r.returned_money_contract_date,pro.project_title,r.returned_money_money from t_returned_money r left join t_project pro  on r.project_id = pro.project_id 
+	</select>
+</mapper>

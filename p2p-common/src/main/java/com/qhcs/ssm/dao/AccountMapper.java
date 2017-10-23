@@ -1,8 +1,6 @@
 package com.qhcs.ssm.dao;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.qhcs.ssm.entity.Account;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author liutianwen
@@ -11,6 +9,7 @@ import com.qhcs.ssm.entity.Account;
  */
 public interface AccountMapper {
 
+	
 	// 根据用户ID查找账户信息
 	public Account queryAccountByUserId(int userId);
 

@@ -5,6 +5,7 @@ package com.qhcs.ssm.entity;
  * @date 2017年10月20日
  * @desc 账户实体类
  */
+
 public class Account extends BaseEntity {
 
 	/**
