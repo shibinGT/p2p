@@ -4,7 +4,8 @@
 	width:75%;
 }
 #investInfo{
-	border:1px red solid;
+	margin-top:30px;
+	border:1px #EBEBEB solid;
 }
 
 .f24 { font-size: 24px;}
@@ -18,12 +19,12 @@
 .show-bar{ line-height:50px;}
 
 #cover{
-	width:600px;
-	height:200px;
+	width:800px;
+	height:300px;
 	position: relative;
 	background-color: white; 
 	float:left;
-	top:-200px;
+	top:-300px;
 	z-index: 5;
 }
 
@@ -34,6 +35,8 @@
 .mod-borrow .hd .icon{background:url(/p2p-manager/static/assets/images/home_sprite.png);position:absolute;}
 .mod-borrow .hd .icon-ssbx{width:38px;height:30px;background-position:-410px 0;left:20px;top:10px;}
 .mod-borrow .bd .des{height:33px;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8;line-height:33px;padding:0 30px;background:#FFF;position:relative;z-index:2;font-size:14px;color:#999;}
+
+.borrow-list .ui-btn{width:88px;height:33px;text-align:center;line-height:33px;font-size:14px;display:inline-block;color:#FFF;}
 .btn-gray{
 	background:#859ab4;
 	margin-right:20px;

@@ -5,11 +5,46 @@
 <mapper namespace="com.qhcs.ssm.dao.ManagerIndexMapper" >
 	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 	<!-- public Map<Date, Integer> getRegNumByDate(); -->
-	
-
-
 	<select id="getRegNumByDate"  resultType="com.qhcs.ssm.entity.RegisterCount">
 		select user_registtime regDate,count(1) number from t_user group by date(user_registtime)
 	</select>
+	
+	<resultMap id="projectMap" type="com.qhcs.ssm.entity.Project" >
+	    <id column="project_id" property="projectId"/>
+	    <result column="project_title" property="projectTitle" jdbcType="VARCHAR" />
+	    <result column="project_raise_money" property="projectRaiseMoney" jdbcType="DOUBLE" />
+	    <collection property="repayment" ofType="com.qhcs.ssm.entity.Repayment">
+	      <id column="repayment_id" property="repaymentId"/>
+	       <result column="investment_id" property="projectId"/>
+	       <result column="user_Id" property="userId"/>
+	       <result column="repayment_contract_date" property="repaymentContractDate"/>
+	       <result column="repayment_interest" property="repaymentInterest"/>
+	       <result column="repayment_principal" property="repaymentPrincipal"/>
+	       <result column="repayment_status" property="repaymentStatus"/>
+	       <result column="repayment_oeriod" property="repaymentPeriod"/>
+	       <result column="repayment_interest_andPrincipal" property="repaymentInterestAndPrincipal"/>
+	       <result column="repayment_practical_date" property="repaymentPracticalDate"/>
+	       <result column="repayment_optator_id" property="repaymentOptatorId"/>
+	       <result column="repayment_opetator_change_time" property="repaymentOpetatorChangeTime"/>
+	       <result column="repayment_auditor_id" property="repaymentAuditorId"/>
+	       <result column="repayment_auditor_date" property="repaymentAuditorDate"/>
+    	</collection> 
+	</resultMap>
+	
+	<!-- public List<Project> getRepaymentList(); 近期应还款的项目-->
+	<select resultMap="projectMap" id="getRepaymentList">
+		select t_project.`project_title`,t_project.`project_raise_money`,t_repayment.* from t_project,t_repayment
+			where t_repayment.`project_id`=t_project.`project_id`and <![CDATA[datediff(repayment_contract_date,now())<=7]]> and repayment_status=0 
+	</select>
+	
+	<!-- public Double getTodayInvestMoney() 今日投资金额 -->
+	<select id="getTodayInvestMoney" resultType="java.lang.Double">
+		select sum(investment_money) total from t_investment where date(investment_date)  = date(now())
+	</select>
+	<!-- public Double getTototalInvestMoney() 总投资金额 -->
+	<select id="getTotalInvestMoney" resultType="java.lang.Double">
+		select sum(investment_money) total from t_investment
+	</select>
+	
 </mapper>
 	
