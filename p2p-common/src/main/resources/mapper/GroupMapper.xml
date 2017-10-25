@@ -5,7 +5,7 @@
 <mapper namespace="com.qhcs.ssm.dao.GroupMapper" >
 	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     
-    <!-- public List<Group> quaryList(String groupCode); -->
+    <!-- public List<Group> quaryList(String groupCode,String order); -->
     <!-- 分组集合 -->
     <resultMap id="groups" type="com.qhcs.ssm.entity.Group">
         <id column="group_id" property="groupId"></id>
@@ -33,6 +33,9 @@
             <bind name="likedesc" value="'%' + groupCode + '%'"/>
             AND g.`group_code` LIKE #{likedesc}
         </if>
+        <if test="order !=null and order != '' ">
+			order by ${order}
+		</if>	
     </select>
     <!-- public Group quaryById(Integer groupId); -->
     <!-- 根据分组id查询分组信息 -->
@@ -118,6 +121,9 @@
    <delete id="delUsers">
         DELETE FROM t_group_employee WHERE group_id = #{groupId}
    </delete>
+   
+   
+   
     
 	
 </mapper>

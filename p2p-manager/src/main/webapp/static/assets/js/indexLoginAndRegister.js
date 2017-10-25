@@ -125,5 +125,11 @@ $(function() {
 		$("#employeePassword").val(password2);
 		$("#loginForm").submit();
 	});
+	//回车密码输入框，触发登录的点击事件
+	$("#employeePassword").keyup(function(event){
+	  if(event.keyCode ==13){
+	    $('#loginSubmint').trigger("click");
+	  }
+	});
 
 });

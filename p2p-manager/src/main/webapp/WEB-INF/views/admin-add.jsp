@@ -13,7 +13,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-	<div class="main-content">
 		<div class="breadcrumbs" id="breadcrumbs">
 			<script type="text/javascript">
 				try {
@@ -50,13 +49,13 @@
 							<label class="block clearfix"> <span
 								class="block input-icon input-icon-right"> <input
 									class="form-control" placeholder="用户名" id="inputName"
-									name="name"> <i class="icon-user"></i> <span
+									name="employeeAccountNumber"> <i class="icon-user"></i> <span
 									id="rNameErrors"></span>
 							</span>
 							</label> <label class="block clearfix"> <span
 								class="block input-icon input-icon-right"> <input
 									type="password" class="form-control" placeholder="密码"
-									id="inputPassword" name="password"> <i
+									id="inputPassword" name="EmployeePassword"> <i
 									class="icon-lock"></i> <span id="rPasswordErrors"></span>
 							</span>
 							</label> <label class="block clearfix"> <span
@@ -72,7 +71,7 @@
 							<c:forEach items="${roles}" var="role">
 								<div class="col-xs-6 col-md-3">
 									<label class="block">
-										<input type="checkbox" name="roleid" class="ace" value="${role.id}"> 
+										<input type="checkbox" name="roleIds" class="ace" value="${role.roleId}"> 
 										<span class="lbl">${role.roleDesc}</span>
 									</label>
 								</div>
@@ -106,17 +105,11 @@
 
 		</div>
 
-	</div>
 	<!-- /.main-content -->
 
 
 	<script src="${ctx}/static/assets/js/typeahead-bs2.min.js"></script>
 
-	<!-- page specific plugin scripts -->
-
-	<!--[if lte IE 8]>
-		  <script src="${ctx}/static/assets/js/excanvas.min.js"></script>
-		<![endif]-->
 
 	<script src="${ctx}/static/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="${ctx}/static/assets/js/jquery.ui.touch-punch.min.js"></script>

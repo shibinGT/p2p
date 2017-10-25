@@ -38,26 +38,47 @@
 		        insert into t_employee_role (employee_id,role_id) values(#{uid},#{rid})
 		</insert>
 	<!-- 
-		public List<Emloyee> queryList(Employee employee);
+		public List<Emloyee> queryList(Employee employee,String order);
 	 -->
 	 
 	 <select id="queryList" resultType="com.qhcs.ssm.entity.Employee">
 	 	select * from t_employee 
 		<where>
-			<if test="employeeAccountNumber!=null and employeeAccountNumber!=''">
-				 <bind name="likename" value="'%'+employeeAccountNumber+'%'"/>
-				  and name like #{likename}
+			<if test="employee.employeeAccountNumber!=null and employee.employeeAccountNumber!=''">
+				 <bind name="likename" value="'%'+employee.employeeAccountNumber+'%'"/>
+				  and employee_account_number like #{likename}
 			</if>
-		</where>	 	
+		</where>
+		<if test="order !=null and order != '' ">
+			order by ${order}
+		</if>	 	
 	 </select>
 	 
 	 <delete id="del">
-	 	delete from t_employee where employee_id=#{employee_id}
+	 	delete from t_employee where employee_id=#{employeeId}
 	 </delete>
 
 	 <delete id="delUserRole" >
-	 	delete from t_employee_role a where employee_id=#{employeeId}
+	 	delete from t_employee_role where employee_id=#{employeeId}
+	 </delete>
+	 <!-- public boolean batchDelUserRole(@Param("lists") Integer[] lists); -->
+	 <delete id="batchDelUserRole">
+	 	delete from t_employee_role where employee_id in 
+	 		<foreach item="id" collection="lists" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+	 </delete>
 	 
+	 <!-- public boolean delUserGroup(Integer id);根据id删除用户的分组信息 -->
+	 <delete id="delUserGroup" >
+	 	delete from t_group_employee where employee_id=#{id}
+	 </delete>
+	 <!-- public boolean batchDelUserGroup(@Param("lists") Integer[] lists); -->
+	 <delete id="batchDelUserGroup">
+	 	delete from t_group_employee where employee_id in 
+	 		<foreach item="id" collection="lists" open="(" separator="," close=")">
+                #{id}
+            </foreach>
 	 </delete>
 	 
 	 <!--  public boolean queryRole(); -->
@@ -65,5 +86,37 @@
 	 	select * from t_role
 	 </select>
 	 
+	 
+	 <!-- public boolean batchDel(@Param("lists") Integer[] lists);批量删除用户 -->
+	 <delete id="batchDel">
+	 	delete from t_employee where employee_id in 
+	 		<foreach item="id" collection="lists" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+	 </delete>
+	 
+	 
+	 <!-- public boolean updatePassword(@Param("id") Integer id, @Param("npsw") String newPassword);重置密码为123456 -->
+	 <update id="updatePassword">
+	 	update t_employee set employee_password = #{npsw} where employee_id = #{id}
+	 </update>
+	 
+	 
+	 <!-- public boolean batchAdd(@Param("list") List<Employee> list);批量上传增加员工 -->
+	 <insert id="batchAdd" useGeneratedKeys="true" keyProperty="employeeId">
+	 	insert into t_employee (employee_account_number,employee_password,employee_real_name,employee_phone)
+	 	values
+			<foreach collection="list" item="employee"   separator="," >
+				(#{employee.employeeAccountNumber},#{employee.employeePassword},#{employee.employeeRealName},#{employee.employeePhone})
+			</foreach>
+	 </insert>
+	 
+	 <!-- public boolean batchAddRole(@Param("list") List<Employee> list);批量增加普通角色 -->
+	 <insert id="batchAddRole">
+        insert into t_employee_role (employee_id,role_id) values 
+        	<foreach collection="list" item="employee"   separator="," >
+				(#{employee.employeeId},2)
+			</foreach>
+     </insert>
 	
 </mapper>

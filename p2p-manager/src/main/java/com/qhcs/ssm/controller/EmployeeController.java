@@ -30,8 +30,8 @@ public class EmployeeController {
 	private EmployeeService userService;
 
 	@RequestMapping("/list")
-	public String list(Employee user, Model model) {
-		PageInfo<Employee> pageInfo = userService.queryList(user);
+	public String list(Employee user, String order, Model model) {
+		PageInfo<Employee> pageInfo = userService.queryList(user, order);
 		model.addAttribute("pageInfo", pageInfo);
 		return "user-list";
 
@@ -42,7 +42,7 @@ public class EmployeeController {
 	 * @param id需要删除的用户id
 	 * @return 返回到list页面
 	 */
-	@RequestMapping("/del/${id}")
+	@RequestMapping("/del/{id}")
 	public String del(@PathVariable("id") Integer id, HttpSession session) {
 
 		boolean operResult = userService.delUserById(id);
@@ -152,7 +152,7 @@ public class EmployeeController {
 			model.addAttribute("isRegister", "true");
 			return "redirect:/user/toAddAdmin";// 失败返回注册页面
 		}
-		System.err.println(user + "123");
+		System.err.println(user.getEmployeePassword());
 		// md5 加密 密码 加密73次用用户名进行加盐
 		String hashAlgorithmName = "MD5";
 		String credentials = user.getEmployeePassword();
@@ -171,6 +171,30 @@ public class EmployeeController {
 		model.addAttribute("isRegister", "true");
 		return "redirect:/user/list";// 失败返回注册页面
 
+	}
+
+	/**
+	 * 批量删除分组
+	 */
+	@RequestMapping("/batchDel")
+	public String batchDelUser(Integer[] lists, Model model) {
+		boolean result = false;
+		if (lists.length > 0) {
+			result = userService.batchDel(lists);
+		}
+		model.addAttribute("result", result);
+		return "redirect:/user/list";
+	}
+
+	@RequestMapping("/update/{id}/{name}")
+	public String updatePassword(@PathVariable("id") Integer id, @PathVariable("name") String name) {
+		String newPassword = "58b64460faadcca8406bcc6dc97320d0";
+		// md5 加密 密码 加密73次用用户名进行加盐
+		Object obj = new SimpleHash("MD5", newPassword, name, 73);
+		// md5end
+		// 修改密码
+		userService.updatePassword(id, obj.toString());
+		return "redirect:/user/list";
 	}
 
 }

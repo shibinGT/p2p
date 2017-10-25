@@ -12,8 +12,8 @@ public class Employee extends BaseEntity {
 	private String employeePassword;
 	// 员工真实姓名
 	private String employeeRealName;
-	// 员工登录时间
-	private Integer employeeTime;
+	// 员工电话
+	private String employeePhone;
 	// 员工角色id列表
 	private List<Integer> roleIds;
 
@@ -49,12 +49,12 @@ public class Employee extends BaseEntity {
 		this.employeeRealName = employeeRealName == null ? null : employeeRealName.trim();
 	}
 
-	public Integer getEmployeeTime() {
-		return employeeTime;
+	public String getEmployeePhone() {
+		return employeePhone;
 	}
 
-	public void setEmployeeTime(Integer employeeTime) {
-		this.employeeTime = employeeTime;
+	public void setEmployeePhone(String employeePhone) {
+		this.employeePhone = employeePhone;
 	}
 
 	public List<Integer> getRoleIds() {
@@ -63,6 +63,13 @@ public class Employee extends BaseEntity {
 
 	public void setRoleIds(List<Integer> roleIds) {
 		this.roleIds = roleIds;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", employeeAccountNumber=" + employeeAccountNumber
+				+ ", employeePassword=" + employeePassword + ", employeeRealName=" + employeeRealName
+				+ ", employeePhone=" + employeePhone + ", roleIds=" + roleIds + "]";
 	}
 
 }

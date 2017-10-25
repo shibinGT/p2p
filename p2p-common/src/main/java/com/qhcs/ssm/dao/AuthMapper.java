@@ -2,7 +2,10 @@ package com.qhcs.ssm.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.qhcs.ssm.entity.Auth;
+import com.qhcs.ssm.entity.Role;
 
 /**
  * 
@@ -31,7 +34,7 @@ public interface AuthMapper {
 	 * @param auth
 	 * @return
 	 */
-	public List<Auth> queryAuths(Auth auth);
+	public List<Auth> queryAuths(@Param("auth") Auth auth, @Param("order") String order);
 
 	/**
 	 * 
@@ -76,7 +79,7 @@ public interface AuthMapper {
 	 *            权限id集合
 	 * @return 返回成功的数量
 	 */
-	public Integer batchDelAuths(List<Integer> ids);
+	public Integer batchDelAuths(@Param("list") List<Integer> ids);
 
 	/**
 	 * 
@@ -119,5 +122,17 @@ public interface AuthMapper {
 	 * @return 返回权限列表
 	 */
 	public List<Auth> getListByUserId(Integer authId);
+
+	/**
+	 * 
+	 * 根据角色列表查询权限列表
+	 * 
+	 * @version 2017年10月20日下午6:43:17
+	 * @author xuweiping
+	 * @param roles
+	 *            角色列表
+	 * @return 返回权限列表
+	 */
+	public List<Auth> getListByRoleList(@Param("lists") List<Role> roles);
 
 }

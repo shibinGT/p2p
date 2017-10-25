@@ -39,8 +39,8 @@ public class AuthController {
 	 * @return 返回权限列表页面
 	 */
 	@RequestMapping("/list")
-	public String list(Auth auth, Model model) {
-		PageInfo<Auth> pageInfo = authService.queryAuths(auth);
+	public String list(Auth auth, String order, Model model) {
+		PageInfo<Auth> pageInfo = authService.queryAuths(auth,order);
 		model.addAttribute("pageInfo", pageInfo);
 		return "auth-list";
 	}
@@ -73,11 +73,13 @@ public class AuthController {
 	 * @param model
 	 *            模型对象
 	 * @return 删除成功返回true,失败返回false
+	 * @throws InterruptedException
 	 */
 	@RequestMapping("/batchDelAuths")
 	public String batchDelAuths(Auth auth, Model model) {
 		boolean result = false;
-		if (auth != null && auth.getAuthId() != null && auth.getIds().size() > 0) {
+		System.err.println(auth.getIds() + ";" + auth.getAuthId());
+		if (auth != null && auth.getIds().size() > 0) {
 			int successCount = authService.batchDelAuths(auth.getIds());
 			result = successCount > 0;
 		}

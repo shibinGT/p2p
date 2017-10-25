@@ -13,7 +13,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-	<div class="main-content">
 		<div class="breadcrumbs" id="breadcrumbs">
 			<script type="text/javascript">
 				try {
@@ -50,9 +49,11 @@
 								<form class="form-group" action="${ctx }/role/list">
 									<div class="input-group">
 										<input name="roleDesc" placeholder="角色描述" class="form-control"
-											value="${role.roleDesc }"> <span
+											value="${role.roleDesc }">
+											<input name="order" class="hidden" id="order" value="${order}"/>
+											 <span
 											class="input-group-btn">
-											<button class="btn btn-primary btn-sm" type="submit">查询</button>
+											<button id="searchForm" class="btn btn-primary btn-sm" type="submit">查询</button>
 										</span>
 									</div>
 								</form>
@@ -84,11 +85,11 @@
 									<th class="sorting" role="columnheader" tabindex="0"
 										aria-controls="sample-table-2" rowspan="1" colspan="1"
 										aria-label="Domain: activate to sort column ascending"
-										style="width: 258px;">角色id</th>
+										style="width: 258px;" onclick="order('role_code')">角色编码</th>
 									<th class="sorting" role="columnheader" tabindex="0"
 										aria-controls="sample-table-2" rowspan="1" colspan="1"
 										aria-label="Domain: activate to sort column ascending"
-										style="width: 258px;">角色描述</th>
+										style="width: 258px;" onclick="order('role_desc')">角色描述</th>
 									<th class="sorting" role="columnheader" tabindex="0"
 										aria-controls="sample-table-2" rowspan="1" colspan="1"
 										aria-label="Price: activate to sort column ascending"
@@ -107,10 +108,10 @@
 									<tr class="odd">
 										<td class="center  sorting_1"><label> <input
 										
-												type="checkbox" class="ace" name="lists" value="${role.id }"> <span class="lbl"></span>
+												type="checkbox" class="ace" name="lists" value="${role.roleId }"> <span class="lbl"></span>
 												
 										</label></td>
-										<td class=" "><a href="#">${role.id }</a></td>
+										<td class=" ">${role.roleCode }</td>
 										<td class=" ">${role.roleDesc}</td>
 										<td>
 											<c:forEach items="${role.auths}" var="auth">
@@ -125,11 +126,11 @@
 												</a>
 												<shiro:hasPermission name="user:*">
 													<!-- 分配权限 -->
-													<a class="green" href="${ctx }/role/toUpdate?id=${role.id}"> <i
+													<a class="green" href="${ctx }/role/toUpdate?id=${role.roleId}"> <i
 														class="icon-pencil bigger-130"></i>
 													</a>
 													  <!-- 	删除 -->
-													<a class="red del_role" href="javascript:void(0)"  roleId="${role.id }"> <i  
+													<a class="red del_role" href="javascript:void(0)"  roleId="${role.roleId }"> <i  
 														class="icon-trash bigger-130"></i>
 													</a>
 												</shiro:hasPermission>
@@ -147,17 +148,11 @@
 			</div>
 		</div>
 
-	</div>
 	<!-- /.main-content -->
 
 
 	<script src="${ctx}/static/assets/js/typeahead-bs2.min.js"></script>
 
-	<!-- page specific plugin scripts -->
-
-	<!--[if lte IE 8]>
-		  <script src="${ctx}/static/assets/js/excanvas.min.js"></script>
-		<![endif]-->
 
 	<script src="${ctx}/static/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="${ctx}/static/assets/js/jquery.ui.touch-punch.min.js"></script>
@@ -170,7 +165,13 @@
 
 
 	<!-- inline scripts related to this page -->
-
+	<script type="text/javascript">
+		function order(order){
+			$("#order").val(order);
+			$("#searchForm").click();
+		}
+	
+	</script>
 	<script type="text/javascript">
 	
 		jQuery(function($) {

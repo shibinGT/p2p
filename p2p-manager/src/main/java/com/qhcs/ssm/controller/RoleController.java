@@ -45,8 +45,7 @@ public class RoleController {
 	 */
 	@RequestMapping("/toAdd")
 	public String toAdd(Model model) {
-		List<Auth> auths = authMapper.queryAuths(null);
-		System.out.println("****************************" + auths.size());
+		List<Auth> auths = authMapper.queryAuths(new Auth(), null);
 		model.addAttribute("auths", auths);
 		return "role-toAdd";
 	}
@@ -75,7 +74,6 @@ public class RoleController {
 	 */
 	@RequestMapping("/batchDel")
 	public String batchDelUser(Integer[] lists, Model model) {
-		System.out.println(lists.length + "=========================");
 		boolean result = false;
 		if (lists.length > 0) {
 			result = roleService.batchDelRole(lists);
@@ -117,7 +115,7 @@ public class RoleController {
 	public String toUpdata(@RequestParam("id") Integer id, Model model) {
 		Role role = roleService.selectById(id);
 		// 权限列表
-		List<Auth> auths = authMapper.queryAuths(null);
+		List<Auth> auths = authMapper.queryAuths(new Auth(), null);
 		model.addAttribute("auths", auths);
 		model.addAttribute("role", role);
 		return "role-update";
@@ -143,8 +141,8 @@ public class RoleController {
 	}
 
 	@RequestMapping("/list")
-	public String roleList(Role role, Model model) {
-		PageInfo<Role> pageInfo = roleService.queryList(role);
+	public String roleList(Role role, String order, Model model) {
+		PageInfo<Role> pageInfo = roleService.queryList(role, order);
 		model.addAttribute("pageInfo", pageInfo);
 		return "role-list";
 	}
