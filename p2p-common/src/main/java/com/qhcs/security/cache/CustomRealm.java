@@ -48,14 +48,15 @@ public class CustomRealm extends AuthorizingRealm implements Realm, Initializing
 		String username = (String) super.getAvailablePrincipal(principals);
 		Employee user = userService.queryUserByName(username);
 		List<Role> roles = roleService.getListByUserId(user.getEmployeeId());
-
+		roles.addAll(roleService.getListByUserIdFromGroup(user.getEmployeeId()));
 		StringBuilder sb = new StringBuilder();
 		for (Role role : roles) {
 			info.addRole(role.getRoleCode());
 			sb.append(role.getRoleId());
 			sb.append(",");
 		}
-		List<Auth> perms = authService.getListByUserId(user.getEmployeeId());
+		// List<Auth> perms = authService.getListByUserId(user.getEmployeeId());
+		List<Auth> perms = authService.getListByRoleList(roles);
 		for (Auth auth : perms) {
 			info.addStringPermission(auth.getAuthCode());
 		}

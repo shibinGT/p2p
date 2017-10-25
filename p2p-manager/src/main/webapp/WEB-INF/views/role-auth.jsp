@@ -13,7 +13,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-	<div class="main-content">
 		<div class="breadcrumbs" id="breadcrumbs">
 			<script type="text/javascript">
 				try {
@@ -129,7 +128,6 @@
 
 		</div>
 
-	</div>
 	<!-- /.main-content -->
 
 

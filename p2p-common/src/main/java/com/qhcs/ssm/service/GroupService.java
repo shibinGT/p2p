@@ -7,7 +7,6 @@ package com.qhcs.ssm.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +37,9 @@ public class GroupService {
 	 *            分组信息
 	 * @return 封装页数的分组列表
 	 */
-	public PageInfo<Group> quaryList(Group group) {
+	public PageInfo<Group> quaryList(Group group, String order) {
 		PageHelper.startPage(group.getPageNum(), group.getPageSize());
-		List<Group> groups = dao.quaryList(group.getGroupCode());
+		List<Group> groups = dao.quaryList(group.getGroupCode(), order);
 		// 封装，把list封装成 PageInfo
 		PageInfo<Group> page = new PageInfo<Group>(groups);
 		// PageInfo pageInfo = PageHelper.startPage(1, 10).doSelectPageInfo(();
@@ -82,7 +81,7 @@ public class GroupService {
 	 *            用户id的集合
 	 * @return int 返回删除成功的数量
 	 */
-	public int batchDelete(@Param("lists") Integer[] lists) {
+	public int batchDelete(Integer[] lists) {
 		return dao.batchDelete(lists);
 	}
 

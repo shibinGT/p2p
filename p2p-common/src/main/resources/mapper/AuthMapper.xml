@@ -19,26 +19,29 @@
 		SELECT auth_id, CASE WHEN auth_type=1 THEN CONCAT('perms[',auth_code,']') ELSE auth_code END auth_code, auth_resource FROM t_auth ORDER BY auth_sort 
 	</select>
 	
-	<!-- 动态查询权限列表 -->
+	<!-- 动态查询权限列表public List<Auth> queryAuths(@Param("auth") Auth auth, @Param("order") String order); -->
 	 <select id="queryAuths" resultMap="authMap">
 	 	select * from t_auth
 	 	<where>
-	 	  <if test="authId!=null and authId!=''">
-	 	    auth_id=#{auth_id}
+	 	  <if test="auth.authId!=null and auth.authId!=''">
+	 	    auth_id=#{auth.auth_id}
 	 	  </if>
-	 	   <if test="authCode!=null and authCode!=''">
-	 	     and auth_code like "%"#{authCode}"%"
+	 	   <if test="auth.authCode!=null and auth.authCode!=''">
+	 	     and auth_code like "%"#{auth.authCode}"%"
 	 	  </if>
-	 	   <if test="authDesc!=null and authDesc!=''">
-	 	      and auth_desc like "%"{authDesc}"%"
+	 	   <if test="auth.authDesc!=null and auth.authDesc!=''">
+	 	      and auth_desc like "%"{auth.authDesc}"%"
 	 	  </if>
-	 	   <if test="authResource!=null and authResource!=''">
-	 	      and auth_resource like "%"#{authResource}"%"
+	 	   <if test="auth.authResource!=null and auth.authResource!=''">
+	 	      and auth_resource like "%"#{auth.authResource}"%"
 	 	  </if>
-	 	  <if test="authType!=null">
-	 	      and auth_type=#{authType}
+	 	  <if test="auth.authType!=null">
+	 	      and auth_type=#{auth.authType}
 	 	  </if>
 	 	</where>
+	 	<if test="order!= null and order!='' ">
+	 		order by ${order}
+	 	</if>
 	 </select>
 	
 	<!-- 根据权限id查询权限 -->
@@ -48,7 +51,7 @@
 	
 	<!-- 根据权限id删除权限 -->
 	 <delete id="delAuthById">
-	   delete from t_auth where id=#{authId}
+	   delete from t_auth where auth_id=#{authId}
 	 </delete>
 	 
 	 <!-- 根据权限id删除相应角色 -->
@@ -108,4 +111,16 @@
 		where a.auth_id=c.auth_id and b.role_id=c.role_id and b.role_id=d.role_id and d.employee_id=#{employeeId}
 	
 	</select>
+	
+	
+	<!-- public List<Auth> getListByRoleList(@Param("lists") List<Role> roles);根据角色列表查询权限列表 -->
+	<select id="getListByRoleList" resultType="com.qhcs.ssm.entity.Auth">
+		select a.* from t_auth a,t_auth_role ar,t_role r
+		where a.`auth_id` = ar.`auth_id` and ar.`role_id` = r.`role_id`
+		and r.`role_id` in 
+		<foreach collection="lists" item="rid" open="(" close=")" separator=",">
+			#{rid.roleId}
+		</foreach>
+	</select>
+	
 </mapper>

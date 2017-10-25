@@ -13,7 +13,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-	<div class="main-content">
 		<div class="breadcrumbs" id="breadcrumbs">
 			<script type="text/javascript">
 				try {
@@ -50,9 +49,11 @@
 								<form class="form-group" action="${ctx }/group/list" method="post">
 									<div class="input-group">
 										<input name="groupCode" placeholder="分组编码" class="form-control"
-											value="${group.groupCode }"> <span
+											value="${group.groupCode }">
+											<input name="order" class="hidden" id="order" value="${order}"/>
+											 <span
 											class="input-group-btn">
-											<button class="btn btn-primary btn-sm" type="submit">查询</button>
+											<button id="searchForm" class="btn btn-primary btn-sm" type="submit">查询</button>
 										</span>
 									</div>
 								</form>
@@ -84,11 +85,11 @@
 									<th class="sorting" group="columnheader" tabindex="0"
 										aria-controls="sample-table-2" rowspan="1" colspan="1"
 										aria-label="Domain: activate to sort column ascending"
-										style="width: 258px;">分组编码</th>
+										style="width: 258px;" onclick="order('group_code')">分组编码</th>
 									<th class="sorting" group="columnheader" tabindex="0"
 										aria-controls="sample-table-2" rowspan="1" colspan="1"
 										aria-label="Domain: activate to sort column ascending"
-										style="width: 258px;">分组描述</th>
+										style="width: 258px;" onclick="order('group_desc')">分组描述</th>
 									<th class="sorting" group="columnheader" tabindex="0"
 										aria-controls="sample-table-2" rowspan="1" colspan="1"
 										aria-label="Price: activate to sort column ascending"
@@ -104,7 +105,7 @@
 							<tbody group="alert" aria-live="polite" aria-relevant="all" id="group_content">
 								<c:if test="${pageInfo.list.size()==0 }">
 									<tr class="odd">
-										<td colspan="5" class="center">没有查询道任何数据...</td>
+										<td colspan="6" class="center">没有查询道任何数据...</td>
 									</tr>
 								</c:if>
 								<c:forEach items="${pageInfo.list }" var="group">
@@ -156,17 +157,11 @@
 			</div>
 		</div>
 
-	</div>
 	<!-- /.main-content -->
 
 
 	<script src="${ctx}/static/assets/js/typeahead-bs2.min.js"></script>
 
-	<!-- page specific plugin scripts -->
-
-	<!--[if lte IE 8]>
-		  <script src="${ctx}/static/assets/js/excanvas.min.js"></script>
-		<![endif]-->
 
 	<script src="${ctx}/static/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="${ctx}/static/assets/js/jquery.ui.touch-punch.min.js"></script>
@@ -180,6 +175,13 @@
 
 	<!-- inline scripts related to this page -->
 
+	<script type="text/javascript">
+			function order(order){
+				$("#order").val(order);
+				$("#searchForm").click();
+			}
+		
+		</script>
 	<script type="text/javascript">
 	
 		jQuery(function($) {

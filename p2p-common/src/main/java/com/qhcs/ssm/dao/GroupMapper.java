@@ -29,7 +29,7 @@ public interface GroupMapper {
 	 *            分组编码
 	 * @return 分组列表
 	 */
-	public List<Group> quaryList(@Param("groupCode") String groupCode);
+	public List<Group> quaryList(@Param("groupCode") String groupCode, @Param("order") String order);
 
 	/**
 	 * 

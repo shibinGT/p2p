@@ -19,8 +19,8 @@
 				<form class="form-horizontal" role="form"
 					action="${ctx }/role/update" method="post">
 					<div class="form-group">
-						<input id="form-field-2" type="hidden" name="id"
-							value="${role.id }" class="col-xs-10 col-sm-5">
+						<input id="form-field-2" type="hidden" name="roleId"
+							value="${role.roleId }" class="col-xs-10 col-sm-5">
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right"
@@ -47,7 +47,7 @@
 					<div>
 					<c:forEach items="${auths }" var="auth">
 						<c:if test="${auth.authType==1 }">
-								<input type="checkbox" name="auths" value="${auth.id }">${auth.authDesc }&nbsp; &nbsp; &nbsp;
+								<input type="checkbox" name="auths" value="${auth.authId }">${auth.authDesc }&nbsp; &nbsp; &nbsp;
 						</c:if>
 					</c:forEach>
 					</div>

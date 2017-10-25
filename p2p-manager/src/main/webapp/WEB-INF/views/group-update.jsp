@@ -19,7 +19,7 @@
 				<form class="form-horizontal" group="form"
 					action="${ctx }/group/update" method="post">
 					<div class="form-group">
-						<input id="form-field-2" type="hidden" name="id"
+						<input id="form-field-2" type="hidden" name="groupId"
 							value="${group.groupId }" class="col-xs-10 col-sm-5">
 					</div>
 					<div class="form-group">

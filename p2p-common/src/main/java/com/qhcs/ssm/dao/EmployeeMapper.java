@@ -67,7 +67,7 @@ public interface EmployeeMapper {
 	 *            参数
 	 * @return 返回用户列表信息
 	 */
-	public List<Employee> queryList(Employee employee);
+	public List<Employee> queryList(@Param("employee") Employee employee, @Param("order") String order);
 
 	/**
 	 * 根据id来删除用户信息
@@ -86,6 +86,22 @@ public interface EmployeeMapper {
 	 * @return 成功返回true，失败返回false
 	 */
 	public boolean delUserRole(Integer id);
+
+	public boolean batchDelUserRole(@Param("lists") Integer[] lists);
+
+	/**
+	 * 
+	 * 根据id删除用户的分组信息
+	 * 
+	 * @version 2017年10月20日上午10:42:50
+	 * @author xuweiping
+	 * @param id
+	 *            用户id
+	 * @return
+	 */
+	public boolean delUserGroup(Integer id);
+
+	public boolean batchDelUserGroup(@Param("lists") Integer[] lists);
 
 	/**
 	 * 
@@ -128,4 +144,47 @@ public interface EmployeeMapper {
 	 */
 	public boolean changePassword(String newPassword, Integer uid);
 
+	/**
+	 * 
+	 * 批量删除用户
+	 * 
+	 * @version 2017年10月20日上午9:31:21
+	 * @author xuweiping
+	 * @param ids
+	 *            要删除的用户的id的list
+	 * @return boolean 添加成功为true，失败为false
+	 */
+	public boolean batchDel(@Param("lists") Integer[] lists);
+
+	/**
+	 * 
+	 * 重置密码为123456
+	 * 
+	 * @version 2017年10月20日下午12:08:16
+	 * @author xuweiping
+	 * @param id
+	 *            用户id
+	 * @param newPassword
+	 * @return
+	 */
+	public boolean updatePassword(@Param("id") Integer id, @Param("npsw") String newPassword);
+
+	/**
+	 * 
+	 * 批量上传增加员工
+	 * 
+	 * @version 2017年10月21日下午3:50:18
+	 * @author xuweiping
+	 * @param list
+	 * @return
+	 */
+	public boolean batchAdd(@Param("list") List<Employee> list);
+
+	/**
+	 * 批量增加普通角色
+	 * 
+	 * @param lists
+	 * @return
+	 */
+	public boolean batchAddRole(@Param("list") List<Employee> list);
 }

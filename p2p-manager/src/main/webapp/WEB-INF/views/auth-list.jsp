@@ -18,7 +18,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="main-content">
 		<div class="breadcrumbs" id="breadcrumbs">
 			<script type="text/javascript">
 				try {
@@ -56,11 +55,12 @@
 								<form class="form-group" action="${ctx }/auth/list"
 									method="post">
 									<div class="input-group">
-										<input name="authCode" placeholder="" class="form-control col-xs-10 col-sm-5"
+										<input name="authCode" placeholder="权限名" class="form-control col-xs-10 col-sm-5"
 											value="${auth.authCode }"/> 
+											<input name="order" class="hidden" id="order" value="${order}"/>
 											 <span
 											class="input-group-btn">
-											<button class="btn btn-primary btn-sm" type="submit">查询</button>
+											<button id="searchForm" class="btn btn-primary btn-sm" type="submit">查询</button>
 										</span>
 
 									</div>
@@ -105,7 +105,7 @@
 														<label class="col-sm-3 control-label no-padding-right"
 															for="form-field-3">防问资源</label>
 														<div class="col-sm-9">
-															<input name="resource" id="addresource"
+															<input name="authResource" id="addresource"
 																placeholder="资源url" class="col-xs-10 col-sm-5" />
 														</div>
 													</div>
@@ -113,7 +113,7 @@
 														<label class="col-sm-3 control-label no-padding-right"
 															for="form-field-4"> 权限排序</label>
 														<div class="col-sm-9">
-															<input name="sort" id="addsort" placeholder="number"
+															<input name="authSort" id="addsort" placeholder="number"
 																class="col-xs-10 col-sm-5" />
 														</div>
 													</div>
@@ -161,23 +161,23 @@
 										<th class="sorting" role="columnheader" tabindex="0"
 											aria-controls="sample-table-2" rowspan="1" colspan="1"
 											aria-label="Domain: activate to sort column ascending"
-											style="width: 258px;">权限名</th>
+											style="width: 258px;" onclick="order('auth_code')">权限名</th>
 										<th class="sorting" role="columnheader" tabindex="0"
 											aria-controls="sample-table-2" rowspan="1" colspan="1"
 											aria-label="Price: activate to sort column ascending"
-											style="width: 179px;">权限描述</th>
+											style="width: 179px;" onclick="order('auth_desc')">权限描述</th>
 										<th class="sorting" role="columnheader" tabindex="0"
 											aria-controls="sample-table-2" rowspan="1" colspan="1"
 											aria-label="Price: activate to sort column ascending"
-											style="width: 179px;">资源</th>
+											style="width: 179px;" onclick="order('auth_resource')">资源</th>
 										<th class="sorting" role="columnheader" tabindex="0"
 											aria-controls="sample-table-2" rowspan="1" colspan="1"
 											aria-label="Price: activate to sort column ascending"
-											style="width: 179px;">排序</th>
+											style="width: 179px;" onclick="order('auth_sort')">排序</th>
 										<th class="sorting" role="columnheader" tabindex="0"
 											aria-controls="sample-table-2" rowspan="1" colspan="1"
 											aria-label="Price: activate to sort column ascending"
-											style="width: 179px;">类型</th>
+											style="width: 179px;" onclick="order('auth_type')">类型</th>
 
 
 										<th class="sorting_disabled" role="columnheader" rowspan="1"
@@ -194,14 +194,14 @@
 
 										<tr class="odd">
 											<td class="center  sorting_1"><label> <input
-													type="checkbox" name="ids" class="ace" value="${auth.id }">
+													type="checkbox" name="ids" class="ace" value="${auth.authId }">
 													<span class="lbl"></span>
 											</label></td>
-											<td class=" " id="${auth.id }1">${auth.authCode }</td>
-											<td class=" " id="${auth.id }2">${auth.authDesc }</td>
-											<td class=" " id="${auth.id }3">${auth.resource }</td>
-											<td class=" " id="${auth.id }4">${auth.sort }</td>
-											<td class=" " id="${auth.id }5">${auth.authType==0?"系统":"自定义" }</td>
+											<td class=" " id="${auth.authId }1">${auth.authCode }</td>
+											<td class=" " id="${auth.authId }2">${auth.authDesc }</td>
+											<td class=" " id="${auth.authId }3">${auth.authResource }</td>
+											<td class=" " id="${auth.authId }4">${auth.authSort }</td>
+											<td class=" " id="${auth.authId }5">${auth.authType==0?"系统":"自定义" }</td>
 
 
 
@@ -214,14 +214,14 @@
 													<shiro:hasPermission name="user:*">
 														<!-- 修改按钮-->
 														<a class="green" href="javascript:void(0)"
-															onclick="editInfo(${auth.id})" data-toggle="modal"
+															onclick="editInfo(${auth.authId})" data-toggle="modal"
 															data-target="#updateModal"> <i
 															class="icon-pencil bigger-130"></i>
 														</a>
 
 
 														<a class="red" href="javascript:void(0)"
-															onclick="affirmDel(${auth.id})"> <i
+															onclick="affirmDel(${auth.authId})"> <i
 															class="icon-trash bigger-130"></i>
 														</a>
 													</shiro:hasPermission>
@@ -254,7 +254,7 @@
 								method="post" id="auth-updateForm">
 								<!-- id -->
 
-								<input name="id" style="display: none;" id="id" value="" />
+								<input name="authId" style="display: none;" id="id" value="" />
 								<!-- 权限名 -->
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right"
@@ -277,7 +277,7 @@
 									<label class="col-sm-3 control-label no-padding-right"
 										for="form-field-3">防问资源</label>
 									<div class="col-sm-9">
-										<input name="resource" id="resource" placeholder="资源url"
+										<input name="authResource" id="resource" placeholder="资源url"
 											class="col-xs-10 col-sm-5" />
 									</div>
 								</div>
@@ -285,7 +285,7 @@
 									<label class="col-sm-3 control-label no-padding-right"
 										for="form-field-4"> 权限排序</label>
 									<div class="col-sm-9">
-										<input name="sort" id="sort" placeholder="number"
+										<input name="authSort" id="sort" placeholder="number"
 											class="col-xs-10 col-sm-5" />
 									</div>
 								</div>
@@ -315,6 +315,19 @@
 				<!-- /.modal -->
 			</div>
 		</div>
+		
+		<script type="text/javascript">
+			function order(order){
+				$("#order").val(order);
+				$("#searchForm").click();
+			}
+		
+		</script>
+		
+		
+		
+		
+		
 		<script>
 	
 //触发修改模态框的同时调用此方法  

@@ -72,6 +72,12 @@
                              	<li>
 		                            <a href="${ctx}/user/list">
 		                                <i class="icon-double-angle-right"></i>
+		                                员工管理
+		                            </a>
+		                        </li>
+                             	<li>
+		                            <a href="${ctx}/users/list">
+		                                <i class="icon-double-angle-right"></i>
 		                                用户管理
 		                            </a>
 		                        </li>
@@ -167,6 +173,5 @@
                         try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
                     </script>
                 </div>
-    
-</body>
-</html>
+    <!-- left-beforepage.jsp -->
+    <div class="main-content">

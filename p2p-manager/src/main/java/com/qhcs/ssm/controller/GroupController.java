@@ -46,7 +46,7 @@ public class GroupController {
 		// 查询角色列表
 		List<Role> roles = roleMapper.queryRoles();
 		// 查询用户列表
-		List<Employee> users = employeeMapper.queryList(null);
+		List<Employee> users = employeeMapper.queryList(new Employee(), null);
 		model.addAttribute("roles2", roles);
 		model.addAttribute("users", users);
 		return "group-add";
@@ -81,7 +81,7 @@ public class GroupController {
 	 */
 	@RequestMapping("/add")
 	public String add(Group group, Model model) {
-		// 添加角色
+
 		boolean result = service.addGroup(group);
 		model.addAttribute("result", result);
 		return "redirect:/group/list";
@@ -94,9 +94,9 @@ public class GroupController {
 	public String toUpdata(@RequestParam("id") Integer id, Model model) {
 		Group group = service.quaryById(id);// 查询得到分组信息
 		// 查询角色列表
-		List<Role> roles =  roleMapper.queryRoles();
+		List<Role> roles = roleMapper.queryRoles();
 		// 查询用户列表
-		List<Employee> users = employeeMapper.queryList(null);
+		List<Employee> users = employeeMapper.queryList(new Employee(), null);
 		model.addAttribute("roles", roles);
 		model.addAttribute("users", users);
 		model.addAttribute("group", group);
@@ -129,8 +129,8 @@ public class GroupController {
 	 * @author xuweiping
 	 */
 	@RequestMapping("/list")
-	public String list(Group group, Model model) {
-		PageInfo<Group> pageInfo = service.quaryList(group);
+	public String list(Group group, String order, Model model) {
+		PageInfo<Group> pageInfo = service.quaryList(group, order);
 		model.addAttribute("pageInfo", pageInfo);
 		return "group-list";
 	}

@@ -129,10 +129,10 @@ public class RoleService {
 	 * @param role
 	 * @return
 	 */
-	public PageInfo<Role> queryList(Role role) {
+	public PageInfo<Role> queryList(Role role, String order) {
 		PageHelper.startPage(role.getPageNum(), role.getPageSize());
 
-		List<Role> roles = roleMapper.queryList(role);
+		List<Role> roles = roleMapper.queryList(role, order);
 		// 封装，把list封装成 PageInfo
 		PageInfo<Role> page = new PageInfo<Role>(roles);
 		// PageInfo pageInfo = PageHelper.startPage(1, 10).doSelectPageInfo(();
@@ -147,5 +147,18 @@ public class RoleService {
 	 */
 	public List<Role> getListByUserId(Integer id) {
 		return roleMapper.getListByUserId(id);
+	}
+
+	/**
+	 * 
+	 * 根据用户id从分组中获得角色
+	 * 
+	 * @version 2017年10月20日下午5:37:19
+	 * @author xuweiping
+	 * @param id
+	 * @return
+	 */
+	public List<Role> getListByUserIdFromGroup(Integer id) {
+		return roleMapper.getListByUserIdFromGroup(id);
 	}
 }

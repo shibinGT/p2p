@@ -58,14 +58,15 @@
 	
 	<!-- public boolean deleteRoleAuth(Integer id); 角色权限对应信息更新-->
 	<delete id="deleteRoleAuth">
-		delete from t_auth_role where role_id=#{roleId};
+		delete from t_auth_role where role_id = #{id};
 	</delete>
 	
 	
 	<!-- 角色集合 -->
 	<resultMap id="roles" type="com.qhcs.ssm.entity.Role">
-		<id column="roleId" property="role_id"></id>
+		<id column="role_id" property="roleId"></id>
 		<result column="role_desc" property="roleDesc"></result>
+		<result column="role_code" property="roleCode"></result>
 		<collection property="auths" ofType="com.qhcs.ssm.entity.Auth">
 			<result column="auth_desc" property="authDesc"></result>
 		</collection>
@@ -73,18 +74,21 @@
 
 	<!-- 根据角色描述查询 -->
 	<select id="queryList"  resultMap="roles">
-		select r.role_id,r.role_desc,a.`auth_desc` from (t_role r left join t_auth_role  ra on r.role_id=ra.role_id) left join t_auth a on a.auth_id=ra.auth_id
+		select r.role_id,r.role_desc,r.role_code,a.`auth_desc` from (t_role r left join t_auth_role  ra on r.role_id=ra.role_id) left join t_auth a on a.auth_id=ra.auth_id
 		<where> 
-		      <if test="roleDesc != null and roleDesc!=''">
-		          <bind name="likedesc" value="'%' + roleDesc + '%'"/>
+		      <if test="role.roleDesc != null and role.roleDesc!=''">
+		          <bind name="likedesc" value="'%' + role.roleDesc + '%'"/>
 			      and r.role_desc like #{likedesc}
 		      </if>
 		</where>
+		<if test="order !=null and order != '' ">
+			order by ${order}
+		</if>	
 	</select>
 	
 	
 	<!-- public List<Role> queryRoles(); -->
-	<select id="queryRoles()" resultType="com.qhcs.ssm.entity.Role">
+	<select id="queryRoles" resultType="com.qhcs.ssm.entity.Role">
 		select * from t_role 
 	</select>
 	
@@ -96,5 +100,13 @@
 	<select id="getListByUserId" resultType="com.qhcs.ssm.entity.Role">
 		select a.* from t_role a,t_employee_role b where a.role_id=b.role_id and b.employee_id= #{employeeId}
 	</select>
+	
+	<!-- public List<Role> getListByUserIdFromGroup(Integer id);根据用户id从分组中获得角色 -->
+	<select id="getListByUserIdFromGroup" resultType="com.qhcs.ssm.entity.Role">
+		select r.* from t_role r,t_employee e,t_group_employee ge,t_group_role gr
+		where e.`employee_id` = ge.`employee_id` and ge.`group_id` = gr.`group_id` and gr.`role_id` = r.`role_id`
+		and e.`employee_id` = #{id}
+	</select>
+	
 	
 </mapper>

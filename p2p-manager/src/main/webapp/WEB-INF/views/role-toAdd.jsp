@@ -13,7 +13,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-	<div class="main-content">
 		<div class="breadcrumbs" id="breadcrumbs">
 			<script type="text/javascript">
 				try {
@@ -63,7 +62,7 @@
 					<div>
 						<c:forEach items="${auths }" var="auth" varStatus="stat">
 							<c:if test="${auth.authType==1 }">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="auths" value="${auth.id }">${auth.authDesc }
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="auths" value="${auth.authId }">${auth.authDesc }
 							</c:if>
 						</c:forEach>
 					</div>
@@ -83,7 +82,6 @@
 					</form>
 			</div>
 		</div>
-	</div>
 	</div>
 	
 	

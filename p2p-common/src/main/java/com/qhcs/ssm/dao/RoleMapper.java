@@ -82,7 +82,7 @@ public interface RoleMapper {
 	 * @param role
 	 * @return
 	 */
-	public List<Role> queryList(Role role);
+	public List<Role> queryList(@Param("role") Role role, @Param("order") String order);
 
 	public List<Role> queryRoles();
 
@@ -102,5 +102,16 @@ public interface RoleMapper {
 	 * @return
 	 */
 	public List<Role> getListByUserId(Integer id);
+
+	/**
+	 * 
+	 * 根据用户id从分组中获得角色
+	 * 
+	 * @version 2017年10月20日下午5:37:19
+	 * @author xuweiping
+	 * @param id
+	 * @return
+	 */
+	public List<Role> getListByUserIdFromGroup(Integer id);
 
 }
