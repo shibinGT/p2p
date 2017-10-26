@@ -584,7 +584,7 @@
 						<div class="ui-tab-cont">
 							<div class="ui-tab-item active">
 								<div class="headlines">
-									<img src="images/news.jpg"> <a title="平台遭遇P2P滑稽抄袭"
+									<img src="${ctx }/images/news.jpg"> <a title="平台遭遇P2P滑稽抄袭"
 										target="_blank" href="#">平台遭遇P2P滑稽抄袭</a><br> <span
 										class="des">抄袭者居然把被抄袭者的名字一起抄下来，这样的乌龙抄袭你见过没...</span>
 								</div>
