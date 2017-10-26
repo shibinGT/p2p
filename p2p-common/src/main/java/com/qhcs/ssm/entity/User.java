@@ -1,4 +1,7 @@
 package com.qhcs.ssm.entity;
+
+import java.util.Date;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -32,8 +35,18 @@ public class User extends BaseEntity {
 	private String userPhone;
 	//用户状态
 	private String userStatus;
+	// 最后登录时间
+	private Date userRegisttime;
 	public Integer getUserId() {
 		return userId;
+	}
+
+	public Date getUserRegisttime() {
+		return userRegisttime;
+	}
+
+	public void setUserRegisttime(Date userRegisttime) {
+		this.userRegisttime = userRegisttime;
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;

@@ -34,7 +34,7 @@
                         
                         <li style="position:relative;">
                             <span>
-                                <a href="#"><i class="dot dot08"></i>系统信息
+                                <a href="${ctx }/message/list"><i class="dot dot08"></i>系统信息
                                      
                                 </a>
                             </span>

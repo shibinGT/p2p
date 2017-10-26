@@ -17,6 +17,11 @@
 	    <artifactId>p2p-common</artifactId>
 	    <version>0.0.1-SNAPSHOT</version>
     </dependency>
+    <dependency>
+    	<groupId>org.apache.poi</groupId>
+		<artifactId>poi-ooxml</artifactId>
+		<version>3.14</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>p2p-manager</finalName>

@@ -1,5 +1,7 @@
 package com.qhcs.ssm.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.qhcs.ssm.entity.User;
@@ -73,4 +75,34 @@ public interface UserMapper {
 	 * @return
 	 */
 	public boolean updateUserPassword(@Param("userPassword")String userPassword,@Param("userName")String userName);
+
+	/**
+	 * 批量增加
+	 * 
+	 * @param lists
+	 * @return
+	 */
+	public boolean batchAdd(@Param("lists") List<User> lists);
+
+	/**
+	 * 根据用户名模糊查询得到列表并根据 order进行排序
+	 * 
+	 * @param userName
+	 *            用户名
+	 * @param order
+	 *            排序依据
+	 * @return
+	 */
+	public List<User> queryList(@Param("userName") String userName, @Param("order") String order);
+
+	/**
+	 * 根据用户的id对用户的状态进行改变
+	 * 
+	 * @param userId
+	 *            用户的id
+	 * @param status
+	 *            改变后的状态
+	 * @return
+	 */
+	public boolean freeze(@Param("userId") Integer userId, @Param("status") Integer status);
 }
