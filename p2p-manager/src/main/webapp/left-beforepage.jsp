@@ -112,6 +112,14 @@
                                 <span class="menu-text">监控管理</span>
                             </a>
                         </li>
+                        <!-- 公告管理 -->
+						 <li>
+                            <a href="${ctx}/news/queryNewsList">
+                                <i class=" icon-eye-open"></i>
+                                <span class="menu-text">公告管理</span>
+                            </a>
+                        </li>
+                      
                         <!-- - -->
                         <li>
                             <a href="#" class="dropdown-toggle">

@@ -17,6 +17,18 @@
 	    <artifactId>p2p-common</artifactId>
 	    <version>0.0.1-SNAPSHOT</version>
     </dependency>
+    <!-- 百度UEditor -->
+<dependency>
+    <groupId>cn.songxinqiang</groupId>
+    <artifactId>com.baidu.ueditor</artifactId>
+    <version>1.1.2-offical</version>
+</dependency>
+<!-- 百度UEditor的json -->
+<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20160810</version>
+</dependency>
     <dependency>
     	<groupId>org.apache.poi</groupId>
 		<artifactId>poi-ooxml</artifactId>
