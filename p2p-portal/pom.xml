@@ -23,8 +23,6 @@
 	    <artifactId>p2p-common</artifactId>
 	    <version>0.0.1-SNAPSHOT</version>
     </dependency>
-    <!-- aaaaaaaaaaaaa -->
-    <!--子bbbb  -->
   </dependencies>
   <build>
     <finalName>p2p-portal</finalName>
